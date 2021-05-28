@@ -1,0 +1,22 @@
+.auth {
+  background-color: floralwhite;
+  width: max-content;
+  border-radius: 16px;
+  padding: 10px 15px;
+  align-self: center;
+  margin: 0 auto;
+  justify-content: center;
+  display: grid;
+  margin-top: 7%;
+}
+.auth__title {
+  font-size: 22px;
+  font-weight: 600;
+}
+.auth__link {
+  color: blueviolet;
+  margin: 10px 0px;
+}
+.auth__btn {
+  margin-top: 20px;
+}
