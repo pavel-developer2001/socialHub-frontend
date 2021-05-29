@@ -2,6 +2,8 @@ import ImageListItem from "@material-ui/core/ImageListItem";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import AddPost from "../components/AddPost";
+import PostList from "../components/PostList";
 import MainLayout from "../layouts/MainLayout";
 import styles from "../styles/Home.module.css";
 
@@ -22,6 +24,10 @@ const Home = () => {
             Dark Side
           </Typography>
         </Paper>
+      </div>
+      <div>
+        <AddPost />
+        <PostList />
       </div>
     </MainLayout>
   );
