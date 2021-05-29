@@ -32,5 +32,21 @@ const Home = () => {
     </MainLayout>
   );
 };
+// export const getServerSideProps = async function () {
+//   // Get the user's session based on the request
+//   const token = localStorage.getItem("token");
 
+//   if (!token) {
+//     return {
+//       redirect: {
+//         destination: "/login",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {},
+//   };
+// };
 export default Home;

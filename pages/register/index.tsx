@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../login/Login.module.css";
+import SocialHubApi from "../../apis/SocialHubApi";
 
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -13,6 +14,9 @@ import IconButton from "@material-ui/core/IconButton";
 import MailOutline from "@material-ui/icons/MailOutline";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useRouter } from "next/dist/client/router";
+import { setToken } from "../../store/reducers/userReducer";
+import { useDispatch } from "react-redux";
 
 interface State {
   amount: string;
@@ -47,6 +51,31 @@ const Register = () => {
   ) => {
     event.preventDefault();
   };
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleRegisterUser = async (e: any) => {
+    e.preventDefault();
+    try {
+      const responce = await SocialHubApi.post("/users/register", {
+        name,
+        email,
+        password,
+        password2,
+      });
+      console.log(responce);
+      localStorage.setItem("user", JSON.stringify(responce.data.data));
+      localStorage.setItem("token", responce.data.token);
+      dispatch(setToken(responce.data.token));
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={styles.auth}>
       <Head>
@@ -70,6 +99,8 @@ const Register = () => {
       <FormControl variant='standard' sx={{ m: 1, width: "40ch" }}>
         <InputLabel htmlFor='input-with-icon-adornment'>Введите имя</InputLabel>
         <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           id='input-with-icon-adornment'
           endAdornment={
             <InputAdornment position='start'>
@@ -84,6 +115,8 @@ const Register = () => {
         </InputLabel>
         <Input
           id='input-with-icon-adornment'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           endAdornment={
             <InputAdornment position='start'>
               <MailOutline />
@@ -98,8 +131,10 @@ const Register = () => {
         <Input
           id='standard-adornment-password'
           type={values.showPassword ? "text" : "password"}
-          value={values.password}
-          onChange={handleChange("password")}
+          // value={values.password}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          // onChange={handleChange("password")}
           endAdornment={
             <InputAdornment position='end'>
               <IconButton
@@ -120,8 +155,10 @@ const Register = () => {
         <Input
           id='standard-adornment-password'
           type={values.showPassword ? "text" : "password"}
-          value={values.password}
-          onChange={handleChange("password")}
+          // value={values.password}
+          // onChange={handleChange("password")}
+          value={password2}
+          onChange={(e) => setPassword2(e.target.value)}
           endAdornment={
             <InputAdornment position='end'>
               <IconButton
@@ -139,6 +176,7 @@ const Register = () => {
         variant='outlined'
         className={styles.auth__btn}
         href='#outlined-buttons'
+        onClick={handleRegisterUser}
       >
         Зарегистрироваться
       </Button>
