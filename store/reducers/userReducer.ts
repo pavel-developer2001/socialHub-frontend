@@ -13,7 +13,7 @@ const initialState: InitialStateType = {
   token: "",
   loading: true,
 };
-export default function mainReducer(state = initialState, action: any) {
+export default function userReducer(state = initialState, action: any) {
   switch (action.type) {
     case SET_FETCH_USERS_DATA:
       return {

@@ -15,6 +15,8 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { experimentalStyled as styled } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../../store/reducers/postReducer";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -36,6 +38,13 @@ const PostListItem = () => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  // const dispatch = useDispatch();
+  // //@ts-ignore
+  // const state = useSelector((state) => state.post);
+  // console.log(state);
+  // React.useEffect(() => {
+  //   dispatch(setPosts());
+  // }, []);
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.postListItem}>
       <CardHeader

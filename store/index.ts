@@ -3,6 +3,7 @@ import { AnyAction, applyMiddleware, compose, createStore } from "redux";
 import { reducer, RootState } from "./reducers";
 import createSagaMiddleware from "redux-saga";
 import { rootWatcher } from "./saga";
+import { SagaReturnType } from "redux-saga/effects";
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers =
@@ -24,4 +25,4 @@ const makeStore: MakeStore<RootState> = (context: Context) => {
 
 export const wrapper = createWrapper<RootState>(makeStore, { debug: true });
 
-// export type NextSagaDispatch = typeof SagaDispatch<RootState, void, AnyAction>;
+export type NextSagaDispatch = SagaReturnType<typeof sagaMiddleware>;

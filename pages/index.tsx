@@ -9,7 +9,7 @@ import AddPost from "../components/AddPost";
 import PostList from "../components/PostList";
 import MainLayout from "../layouts/MainLayout";
 import styles from "../styles/Home.module.css";
-import { wrapper } from "../store";
+import { NextSagaDispatch, wrapper } from "../store";
 
 //TODO:  3 Сделать Auth 4 Доделать получение users 5 Сделать получение и добавления постов
 
@@ -17,8 +17,10 @@ const Home = () => {
   const router = useRouter();
 
   //@ts-ignore
-  const token = useSelector((state) => state.user);
-  console.log(token);
+  const { token } = useSelector((state) => state.user);
+  //@ts-ignore
+  const state = useSelector((state) => state.user.users);
+  console.log(state);
   const dispatch = useDispatch();
   // React.useEffect(() => {
   //   dispatch(setUsers());
@@ -75,10 +77,11 @@ const Home = () => {
 //     props: {},
 //   };
 // };
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async ({ store }) => {
-//     const dispatch = store.dispatch;
-//     await dispatch(await dispatch(setUsers()));
-//   }
-// );
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store }) => {
+    const dispatch = store.dispatch as NextSagaDispatch;
+    //@ts-ignore
+    await dispatch(await dispatch(setUsers()));
+  }
+);
 export default Home;
