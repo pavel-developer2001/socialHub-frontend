@@ -1,13 +1,39 @@
 import ImageListItem from "@material-ui/core/ImageListItem";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import { useRouter } from "next/dist/client/router";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUsers } from "../store/reducers/userReducer";
 import AddPost from "../components/AddPost";
 import PostList from "../components/PostList";
 import MainLayout from "../layouts/MainLayout";
 import styles from "../styles/Home.module.css";
+import { wrapper } from "../store";
+
+//TODO:  3 Сделать Auth 4 Доделать получение users 5 Сделать получение и добавления постов
 
 const Home = () => {
+  const router = useRouter();
+
+  //@ts-ignore
+  const token = useSelector((state) => state.user);
+  console.log(token);
+  const dispatch = useDispatch();
+  // React.useEffect(() => {
+  //   dispatch(setUsers());
+  // }, []);
+  React.useEffect(() => {
+    dispatch(setToken(localStorage.getItem("token")));
+  }, [token]);
+  // React.useEffect(() => {
+  // if (!token) {
+  //   router.push("/login");
+  // } else {
+  //   router.push("/");
+  // }
+  // });
+
   return (
     <MainLayout>
       <div className={styles.home__head}>
@@ -32,7 +58,7 @@ const Home = () => {
     </MainLayout>
   );
 };
-// export const getServerSideProps = async function () {
+// export const getStaticProps = async function () {
 //   // Get the user's session based on the request
 //   const token = localStorage.getItem("token");
 
@@ -49,4 +75,10 @@ const Home = () => {
 //     props: {},
 //   };
 // };
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store }) => {
+//     const dispatch = store.dispatch;
+//     await dispatch(await dispatch(setUsers()));
+//   }
+// );
 export default Home;

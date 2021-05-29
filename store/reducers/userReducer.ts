@@ -1,4 +1,5 @@
-const SET_FETCH_DATA = "SET_FETCH_DATA";
+const SET_FETCH_USERS_DATA = "SET_FETCH_USERS_DATA ";
+export const SET_USERS = "SET_USERS";
 const SET_TOKEN = "SET_TOKEN";
 
 type InitialStateType = {
@@ -14,10 +15,10 @@ const initialState: InitialStateType = {
 };
 export default function mainReducer(state = initialState, action: any) {
   switch (action.type) {
-    case SET_FETCH_DATA:
+    case SET_FETCH_USERS_DATA:
       return {
         ...state,
-        posts: action.payload,
+        users: action.payload,
         loading: false,
       };
     case SET_TOKEN:
@@ -30,9 +31,12 @@ export default function mainReducer(state = initialState, action: any) {
   }
 }
 
-export const setFetchData = (payload: any) => ({
-  type: SET_FETCH_DATA,
+export const setFetchUsersData = (payload: any) => ({
+  type: SET_FETCH_USERS_DATA,
   payload,
+});
+export const setUsers = () => ({
+  type: SET_USERS,
 });
 export const setToken = (payload: any) => ({
   type: SET_TOKEN,

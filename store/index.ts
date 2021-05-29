@@ -5,13 +5,23 @@ import createSagaMiddleware from "redux-saga";
 import { rootWatcher } from "./saga";
 const sagaMiddleware = createSagaMiddleware();
 
-//@ts-ignore
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const makeStore: MakeStore<RootState> = (context: Context) =>
-  createStore(reducer, applyMiddleware());
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    //@ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
-// export an assembled wrapper
-// makeStore.sagaTask = sagaMiddleware.run(rootWatcher);
+const makeStore: MakeStore<RootState> = (context: Context) => {
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(sagaMiddleware))
+  );
+  //@ts-ignore
+  store.sagaTask = sagaMiddleware.run(rootWatcher);
+  return store;
+};
+
 export const wrapper = createWrapper<RootState>(makeStore, { debug: true });
-// sagaMiddleware.run(rootWatcher);
-// export type NextSagaDispatch = SagaDispatch<RootState, void, AnyAction>;
+
+// export type NextSagaDispatch = typeof SagaDispatch<RootState, void, AnyAction>;

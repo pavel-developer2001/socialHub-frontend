@@ -13,6 +13,10 @@ import IconButton from "@material-ui/core/IconButton";
 import MailOutline from "@material-ui/icons/MailOutline";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import SocialHubApi from "../../apis/SocialHubApi";
+import { useRouter } from "next/dist/client/router";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../store/reducers/userReducer";
 
 interface State {
   amount: string;
@@ -47,6 +51,29 @@ const Login = () => {
   ) => {
     event.preventDefault();
   };
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleLoginUser = async (e: any) => {
+    e.preventDefault();
+    try {
+      const responce = await SocialHubApi.post("/users/login", {
+        email,
+        password,
+      });
+      console.log(responce);
+      localStorage.setItem("user", JSON.stringify(responce.data.data));
+      localStorage.setItem("token", responce.data.token);
+      dispatch(setToken(responce.data.token));
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={styles.auth}>
       <Head>
@@ -71,6 +98,8 @@ const Login = () => {
         <InputLabel htmlFor='input-with-icon-adornment'>Email</InputLabel>
         <Input
           id='input-with-icon-adornment'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           endAdornment={
             <InputAdornment position='start'>
               <MailOutline />
@@ -82,9 +111,11 @@ const Login = () => {
         <InputLabel htmlFor='standard-adornment-password'>Пароль</InputLabel>
         <Input
           id='standard-adornment-password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           type={values.showPassword ? "text" : "password"}
-          value={values.password}
-          onChange={handleChange("password")}
+          // value={values.password}
+          // onChange={handleChange("password")}
           endAdornment={
             <InputAdornment position='end'>
               <IconButton
@@ -99,7 +130,11 @@ const Login = () => {
         />
       </FormControl>
       <Link href='/register'>Зарегистрироваться</Link>
-      <Button variant='outlined' href='#outlined-buttons'>
+      <Button
+        variant='outlined'
+        href='#outlined-buttons'
+        onClick={handleLoginUser}
+      >
         Войти
       </Button>
     </div>
