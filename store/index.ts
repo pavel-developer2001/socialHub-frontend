@@ -25,4 +25,4 @@ const makeStore: MakeStore<RootState> = (context: Context) => {
 
 export const wrapper = createWrapper<RootState>(makeStore, { debug: true });
 
-export type NextSagaDispatch = SagaReturnType<typeof sagaMiddleware>;
+// export type NextSagaDispatch = SagaReturnType<typeof sagaMiddleware>;

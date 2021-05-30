@@ -9,9 +9,10 @@ import AddPost from "../components/AddPost";
 import PostList from "../components/PostList";
 import MainLayout from "../layouts/MainLayout";
 import styles from "../styles/Home.module.css";
-import { NextSagaDispatch, wrapper } from "../store";
+import { wrapper } from "../store";
+import { END } from "redux-saga";
 
-//TODO:  3 Сделать Auth 4 Доделать получение users 5 Сделать получение и добавления постов
+//TODO:  3 Сделать Auth 5 Сделать получение и добавления постов
 
 const Home = () => {
   const router = useRouter();
@@ -22,9 +23,6 @@ const Home = () => {
   const state = useSelector((state) => state.user.users);
   console.log(state);
   const dispatch = useDispatch();
-  // React.useEffect(() => {
-  //   dispatch(setUsers());
-  // }, []);
   React.useEffect(() => {
     dispatch(setToken(localStorage.getItem("token")));
   }, [token]);
@@ -77,11 +75,14 @@ const Home = () => {
 //     props: {},
 //   };
 // };
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   async ({ store }) => {
-//     const dispatch = store.dispatch as NextSagaDispatch;
-//     //@ts-ignore
-//     await dispatch(await dispatch(setUsers()));
-//   }
-// );
+
+export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
+  //@ts-ignore
+  if (!store.getState().placeholderData) {
+    store.dispatch(setUsers());
+    store.dispatch(END);
+  }
+  //@ts-ignore
+  await store.sagaTask.toPromise();
+});
 export default Home;
