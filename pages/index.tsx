@@ -77,11 +77,11 @@ const Home = () => {
 //     props: {},
 //   };
 // };
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    const dispatch = store.dispatch as NextSagaDispatch;
-    //@ts-ignore
-    await dispatch(await dispatch(setUsers()));
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store }) => {
+//     const dispatch = store.dispatch as NextSagaDispatch;
+//     //@ts-ignore
+//     await dispatch(await dispatch(setUsers()));
+//   }
+// );
 export default Home;

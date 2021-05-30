@@ -1,5 +1,6 @@
 import { put, takeEvery, call } from "redux-saga/effects";
-import { SET_POSTS, setFetchPostsData } from "../reducers/postReducer";
+import { setFetchPostsData } from "../reducers/postReducer";
+import { PostActionTypes } from "../types/post";
 import { PostsApi } from "../../apis/postsApi";
 
 function* fetchPostWorker() {
@@ -11,5 +12,5 @@ function* fetchPostWorker() {
   }
 }
 export function* postWatcher() {
-  yield takeEvery(SET_POSTS, fetchPostWorker);
+  yield takeEvery(PostActionTypes.SET_POSTS, fetchPostWorker);
 }

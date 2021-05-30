@@ -1,5 +1,6 @@
 import { put, takeEvery, call } from "redux-saga/effects";
-import { SET_USERS, setFetchUsersData } from "../reducers/userReducer";
+import { setFetchUsersData } from "../reducers/userReducer";
+import { UserActionTypes } from "../types/user";
 import { UsersApi } from "../../apis/usersApi";
 
 function* fetchUserWorker() {
@@ -7,5 +8,5 @@ function* fetchUserWorker() {
   yield put(setFetchUsersData(users));
 }
 export function* userWatcher() {
-  yield takeEvery(SET_USERS, fetchUserWorker);
+  yield takeEvery(UserActionTypes.SET_USERS, fetchUserWorker);
 }

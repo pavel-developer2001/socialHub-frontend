@@ -1,32 +1,29 @@
-const SET_FETCH_POSTS_DATA = "SET_FETCH_POSTS_DATA";
-export const SET_POSTS = "SET_POSTS ";
+import produce, { Draft } from "immer";
+import { PostAction, PostActionTypes, PostState } from "../types/post";
 
-type InitialStateType = {
-  posts: any[];
-  loading: boolean;
-};
-
-const initialState: InitialStateType = {
+const initialState: PostState = {
   posts: [],
   loading: true,
 };
-export default function postReducer(state = initialState, action: any) {
-  switch (action.type) {
-    case SET_FETCH_POSTS_DATA:
-      return {
-        ...state,
-        posts: action.payload,
-        loading: false,
-      };
-    default:
-      return state;
-  }
-}
+
+export const postReducer = produce(
+  (draft: Draft<PostState>, action: PostAction) => {
+    switch (action.type) {
+      case PostActionTypes.SET_FETCH_POSTS_DATA:
+        draft.posts = action.payload;
+        draft.loading = false;
+        break;
+      default:
+        break;
+    }
+  },
+  initialState
+);
 
 export const setFetchPostsData = (payload: any) => ({
-  type: SET_FETCH_POSTS_DATA,
+  type: PostActionTypes.SET_FETCH_POSTS_DATA,
   payload,
 });
 export const setPosts = () => ({
-  type: SET_POSTS,
+  type: PostActionTypes.SET_POSTS,
 });
