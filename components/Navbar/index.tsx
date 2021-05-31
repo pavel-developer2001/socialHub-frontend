@@ -16,6 +16,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
+import { setToken } from "../../store/reducers/userReducer";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/dist/client/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,6 +64,9 @@ const Navbar = () => {
     React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const users: any =
+    typeof window !== "undefined" && localStorage.getItem("user");
+  const router = useRouter();
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -72,6 +78,20 @@ const Navbar = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+  const handleOpenProfile = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    router.push(`/users/${JSON.parse(users).id}`);
+  };
+  const dispatch = useDispatch();
+  const handleExitUser = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    router.push("/login");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    dispatch(setToken(""));
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -96,8 +116,8 @@ const Navbar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Мой профиль</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Выход</MenuItem>
+      <MenuItem onClick={handleOpenProfile}>Мой профиль</MenuItem>
+      <MenuItem onClick={handleExitUser}>Выход</MenuItem>
     </Menu>
   );
   const renderMobileMenu = (

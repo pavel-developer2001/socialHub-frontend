@@ -7,8 +7,9 @@ import MainLayout from "../layouts/MainLayout";
 
 import { wrapper } from "../store";
 import { END } from "redux-saga";
+import Login from "./login";
 
-//TODO:  3 Сделать Auth 5 Сделать получение и добавления постов
+//TODO:  5 Сделать получение и добавления постов
 
 const Home = () => {
   const router = useRouter();
@@ -23,35 +24,10 @@ const Home = () => {
   React.useEffect(() => {
     dispatch(setToken(localStorage.getItem("token")));
   }, [token]);
-
-  // if (!token) return
-  // React.useEffect(() => {
-  // if (!token) {
-  //   router.push("/login");
-  // } else {
-  //   router.push("/");
-  // }
-  // });
+  if (!token) return <Login />;
 
   return <MainLayout>лента</MainLayout>;
 };
-// export const getStaticProps = async function () {
-//   // Get the user's session based on the request
-//   const token = localStorage.getItem("token");
-
-//   if (!token) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {},
-//   };
-// };
 
 export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
   //@ts-ignore
