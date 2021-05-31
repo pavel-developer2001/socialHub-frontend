@@ -1,14 +1,10 @@
-import ImageListItem from "@material-ui/core/ImageListItem";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import { useRouter } from "next/dist/client/router";
+import { Router, useRouter } from "next/dist/client/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUsers } from "../store/reducers/userReducer";
-import AddPost from "../components/AddPost";
-import PostList from "../components/PostList";
+
 import MainLayout from "../layouts/MainLayout";
-import styles from "../styles/Home.module.css";
+
 import { wrapper } from "../store";
 import { END } from "redux-saga";
 
@@ -21,11 +17,14 @@ const Home = () => {
   const { token } = useSelector((state) => state.user);
   //@ts-ignore
   const state = useSelector((state) => state.user.users);
+  console.log(token);
   console.log(state);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(setToken(localStorage.getItem("token")));
   }, [token]);
+
+  // if (!token) return
   // React.useEffect(() => {
   // if (!token) {
   //   router.push("/login");
@@ -34,29 +33,7 @@ const Home = () => {
   // }
   // });
 
-  return (
-    <MainLayout>
-      <div className={styles.home__head}>
-        <ImageListItem>
-          <img
-            className={styles.home__img}
-            srcSet='https://www.woddal.com/upload/photos/2020/02/WQu5hFcRetKegzqsbseJ_06_46054a9f52409eb9fe6f321ab0f074ee_avatar_full.jpeg'
-            alt='init person avatar'
-            loading='lazy'
-          />
-        </ImageListItem>
-        <Paper elevation={2} className={styles.home__headContent}>
-          <Typography variant='h5' gutterBottom component='div'>
-            Dark Side
-          </Typography>
-        </Paper>
-      </div>
-      <div>
-        <AddPost />
-        <PostList />
-      </div>
-    </MainLayout>
-  );
+  return <MainLayout>лента</MainLayout>;
 };
 // export const getStaticProps = async function () {
 //   // Get the user's session based on the request

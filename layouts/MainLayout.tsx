@@ -24,17 +24,19 @@ import Navbar from "../components/Navbar";
 const drawerWidth = 240;
 
 const MainLayout: React.FC<any> = ({ children }) => {
+  const users: any =
+    typeof window !== "undefined" && localStorage.getItem("user");
   const menuItems = [
     {
       id: 1,
       name: "Моя страница",
-      link: "/",
+      link: `/users/${JSON.parse(users).id}`,
       icon: <AccountCircleIcon />,
     },
     {
       id: 2,
       name: "Лента",
-      link: "/news",
+      link: "/",
       icon: <FiberNewIcon />,
     },
     {
