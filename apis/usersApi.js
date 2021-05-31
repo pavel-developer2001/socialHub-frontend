@@ -8,4 +8,12 @@ export const UsersApi = {
       console.log(error);
     }
   },
+  async getFetchUser(id) {
+    try {
+      const data = await SocialHubApi.get(`/users/` + id);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

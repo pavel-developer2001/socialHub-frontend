@@ -8,6 +8,8 @@ import MainLayout from "../layouts/MainLayout";
 import { wrapper } from "../store";
 import { END } from "redux-saga";
 import Login from "./login";
+import { setPosts } from "../store/reducers/postReducer";
+import PostList from "../components/PostList";
 
 //TODO:  5 Сделать получение и добавления постов
 
@@ -17,22 +19,26 @@ const Home = () => {
   //@ts-ignore
   const { token } = useSelector((state) => state.user);
   //@ts-ignore
-  const state = useSelector((state) => state.user.users);
-  console.log(token);
-  console.log(state);
+  const { posts, loading } = useSelector((state) => state.post);
+
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(setToken(localStorage.getItem("token")));
   }, [token]);
   if (!token) return <Login />;
 
-  return <MainLayout>лента</MainLayout>;
+  return (
+    <MainLayout>
+      лента
+      <PostList loading={loading} posts={posts.data} />
+    </MainLayout>
+  );
 };
 
-export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
+export const getServerSideProps = wrapper.getStaticProps(async ({ store }) => {
   //@ts-ignore
   if (!store.getState().placeholderData) {
-    store.dispatch(setUsers());
+    store.dispatch(setPosts());
     store.dispatch(END);
   }
   //@ts-ignore

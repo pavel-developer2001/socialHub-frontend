@@ -3,6 +3,7 @@ import { UserAction, UserActionTypes, UserState } from "../types/user";
 
 const initialState: UserState = {
   users: [],
+  user: [],
   token: "",
   loading: true,
 };
@@ -17,6 +18,9 @@ export const userReducer = produce(
       case UserActionTypes.SET_TOKEN:
         draft.token = action.payload;
         break;
+      case UserActionTypes.SET_FETCH_USERS_ITEM_DATA:
+        draft.user = action.payload;
+        draft.loading = false;
       default:
         break;
     }
@@ -31,6 +35,16 @@ export const setFetchUsersData = (payload: any) => ({
 export const setUsers = () => ({
   type: UserActionTypes.SET_USERS,
 });
+
+export const setFetchUsersItemData = (payload: any) => ({
+  type: UserActionTypes.SET_FETCH_USERS_ITEM_DATA,
+  payload,
+});
+export const setUser = (payload: any) => ({
+  type: UserActionTypes.SET_USER,
+  payload,
+});
+
 export const setToken = (payload: any) => ({
   type: UserActionTypes.SET_TOKEN,
   payload,

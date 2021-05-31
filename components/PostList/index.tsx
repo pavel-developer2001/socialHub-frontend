@@ -17,6 +17,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../store/reducers/postReducer";
+import Link from "next/link";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -32,54 +33,60 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const PostListItem = () => {
+const PostListItem: React.FC<any> = ({
+  userId,
+  name,
+  text,
+  likes,
+  date,
+  imagePost,
+}) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  // const dispatch = useDispatch();
-  // //@ts-ignore
-  // const state = useSelector((state) => state.post);
-  // console.log(state);
-  // React.useEffect(() => {
-  //   dispatch(setPosts());
-  // }, []);
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.postListItem}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title='Shrimp and Chorizo Paella'
-        subheader='September 14, 2016'
-      />
-      <CardMedia
-        sx={{
-          height: 0,
-          paddingTop: "56.25%", // 16:9
-        }}
-        image='/static/images/cards/paella.jpg'
-        title='Paella dish'
-      />
+      <Link href={`/users/${userId}`}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+              R
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label='settings'>
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={name}
+          subheader={date}
+        />
+      </Link>
+      {imagePost ? (
+        <CardMedia
+          sx={{
+            height: 0,
+            paddingTop: "56.25%", // 16:9
+          }}
+          image={imagePost}
+          title='Paella dish'
+        />
+      ) : null}
+
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
           <FavoriteIcon />
         </IconButton>
+        <Typography variant='body2' color='text.secondary'>
+          {likes}
+        </Typography>
         <IconButton aria-label='share'>
           <ShareIcon />
         </IconButton>
@@ -126,12 +133,24 @@ const PostListItem = () => {
     </Card>
   );
 };
-const PostList = () => {
+const PostList: React.FC<any> = ({ posts, loading }) => {
   return (
     <div>
-      <PostListItem />
-      <PostListItem />
-      <PostListItem />
+      {loading ? (
+        <p>loading</p>
+      ) : (
+        posts.map((post: any) => (
+          <PostListItem
+            key={post.id}
+            userId={post.userId}
+            name={post.author}
+            text={post.postText}
+            likes={post.countLikes}
+            date={post.createdAt}
+            imagePost={post.picturePost}
+          />
+        ))
+      )}
     </div>
   );
 };
