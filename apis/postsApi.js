@@ -8,4 +8,12 @@ export const PostsApi = {
       console.log(error);
     }
   },
+  async addFetchPost(payload) {
+    try {
+      const data = await SocialHubApi.post("/posts/create", payload);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

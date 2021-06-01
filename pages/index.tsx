@@ -10,6 +10,7 @@ import { END } from "redux-saga";
 import Login from "./login";
 import { setPosts } from "../store/reducers/postReducer";
 import PostList from "../components/PostList";
+import AddPost from "../components/AddPost";
 
 //TODO:  5 Сделать получение и добавления постов
 
@@ -33,6 +34,9 @@ const Home = () => {
   return (
     <MainLayout>
       лента
+      <div>
+        <AddPost />
+      </div>
       <PostList loading={loading} posts={posts.data} />
     </MainLayout>
   );
