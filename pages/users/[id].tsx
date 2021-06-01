@@ -15,7 +15,7 @@ import { useRouter } from "next/dist/client/router";
 const Users = () => {
   const { user } = useSelector((state: any) => state.user);
   const { loading } = useSelector((state: any) => state.user);
-  const data = user.data.user;
+  const data = user?.data?.user;
   return (
     <MainLayout>
       <>
@@ -41,8 +41,15 @@ const Users = () => {
           )}
         </div>
         <div>
-          <AddPost />
-          <PostList loading={loading} posts={user.data.postsUser} />
+          {loading ? (
+            <p>loading</p>
+          ) : (
+            <>
+              {" "}
+              <AddPost />
+              <PostList loading={loading} posts={user?.data?.postsUser} />
+            </>
+          )}
         </div>
       </>
     </MainLayout>

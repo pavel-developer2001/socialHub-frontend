@@ -25,7 +25,10 @@ const Home = () => {
   React.useEffect(() => {
     dispatch(setToken(localStorage.getItem("token")));
   }, [token]);
-  if (!token) return <Login />;
+
+  React.useEffect((): any => {
+    if (!token) return <Login />;
+  }, []);
 
   return (
     <MainLayout>
