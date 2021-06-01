@@ -18,6 +18,7 @@ import { experimentalStyled as styled } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../store/reducers/postReducer";
 import Link from "next/link";
+import { useRouter } from "next/dist/client/router";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -37,6 +38,7 @@ const PostListItem: React.FC<any> = ({
   userId,
   name,
   text,
+  postId,
   likes,
   date,
   imagePost,
@@ -46,6 +48,8 @@ const PostListItem: React.FC<any> = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const router = useRouter();
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.postListItem}>
       <Link href={`/users/${userId}`}>
@@ -76,7 +80,12 @@ const PostListItem: React.FC<any> = ({
       ) : null}
 
       <CardContent>
-        <Typography variant='body2' color='text.secondary'>
+        {" "}
+        <Typography
+          variant='body2'
+          onClick={() => router.push(`/posts/${postId}`)}
+          color='text.secondary'
+        >
           {text}
         </Typography>
       </CardContent>
@@ -142,6 +151,7 @@ const PostList: React.FC<any> = ({ posts, loading }) => {
         posts.map((post: any) => (
           <PostListItem
             key={post.id}
+            postId={post.id}
             userId={post.userId}
             name={post.author}
             text={post.postText}

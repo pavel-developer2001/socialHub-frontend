@@ -5,6 +5,12 @@ const initialState: PostState = {
   posts: {
     data: [],
   },
+  post: {
+    data: {
+      post: {},
+      commentsPost: [],
+    },
+  },
   loading: true,
 };
 
@@ -17,6 +23,9 @@ export const postReducer = produce(
         break;
       case PostActionTypes.ADD_POST:
         draft.posts.data.push(action.payload.data);
+      case PostActionTypes.SET_FETCH_POSTS_ITEM_DATA:
+        draft.post = action.payload;
+        draft.loading = false;
       default:
         break;
     }
@@ -37,5 +46,13 @@ export const addPost = (payload: any) => ({
 });
 export const addPostFetch = (payload: any) => ({
   type: PostActionTypes.ADD_POST_FETCH,
+  payload,
+});
+export const setFetchPostsItemData = (payload: any) => ({
+  type: PostActionTypes.SET_FETCH_POSTS_ITEM_DATA,
+  payload,
+});
+export const setPost = (payload: any) => ({
+  type: PostActionTypes.SET_POST,
   payload,
 });

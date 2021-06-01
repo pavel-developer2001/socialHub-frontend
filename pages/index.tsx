@@ -12,7 +12,7 @@ import { setPosts } from "../store/reducers/postReducer";
 import PostList from "../components/PostList";
 import AddPost from "../components/AddPost";
 
-//TODO:  5 Сделать получение и добавления постов
+//TODO:  1 Сделать страницу поста, получение и добавления комментариев
 
 const Home = () => {
   const router = useRouter();
