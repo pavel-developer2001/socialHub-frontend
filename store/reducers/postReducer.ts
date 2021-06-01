@@ -26,6 +26,10 @@ export const postReducer = produce(
       case PostActionTypes.SET_FETCH_POSTS_ITEM_DATA:
         draft.post = action.payload;
         draft.loading = false;
+      case PostActionTypes.ADD_COMMENT:
+        typeof window !== "undefined" &&
+          draft.post.data.commentsPost.push(action.payload.data);
+
       default:
         break;
     }
@@ -54,5 +58,13 @@ export const setFetchPostsItemData = (payload: any) => ({
 });
 export const setPost = (payload: any) => ({
   type: PostActionTypes.SET_POST,
+  payload,
+});
+export const addComment = (payload: any) => ({
+  type: PostActionTypes.ADD_COMMENT,
+  payload,
+});
+export const addCommentFetch = (payload: any) => ({
+  type: PostActionTypes.ADD_COMMENT_FETCH,
   payload,
 });

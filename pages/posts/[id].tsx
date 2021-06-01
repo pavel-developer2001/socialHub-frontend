@@ -27,7 +27,6 @@ const Post = () => {
       return <p>Loading</p>;
     }
   }, []);
-  console.log(router.query.id);
   return (
     <MainLayout>
       <div className={styles.postHead}>
@@ -96,7 +95,7 @@ const Post = () => {
             <p>Loading Comments</p>
           ) : (
             <>
-              <AddComment />
+              <AddComment postId={router.query.id} />
               <CommentList
                 comments={post?.data?.commentsPost}
                 loading={loading}
