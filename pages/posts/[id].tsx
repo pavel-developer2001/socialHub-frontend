@@ -5,8 +5,13 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import CommentIcon from "@material-ui/icons/Comment";
 import styles from "./Posts.module.css";
+import Fade from "@material-ui/core/Fade";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { useRouter } from "next/dist/client/router";
 import Avatar from "@material-ui/core/Avatar";
 import { deepPurple } from "@material-ui/core/colors";
@@ -22,11 +27,18 @@ const Post = () => {
   const router = useRouter();
   const { loading, post } = useSelector((state: any) => state.post);
   const postItem = post?.data?.post;
-  React.useEffect((): any => {
-    if (loading) {
-      return <p>Loading</p>;
-    }
-  }, []);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <MainLayout>
       <div className={styles.postHead}>
@@ -43,10 +55,31 @@ const Post = () => {
           </Typography>
         </div>
         <div className={styles.postHeadParams}>
-          <IconButton aria-label='settings'>
+          <IconButton
+            aria-label='settings'
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
             <MoreVertIcon />
           </IconButton>
         </div>
+        <Menu
+          id='fade-menu'
+          MenuListProps={{
+            "aria-labelledby": "fade-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <MenuItem onClick={handleClose}>
+            <DeleteIcon /> Удалить
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <EditIcon /> Редактировать
+          </MenuItem>
+        </Menu>
       </div>
       <div className={styles.postBody}>
         {postItem?.picturePost ? (

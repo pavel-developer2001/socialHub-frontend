@@ -7,6 +7,8 @@ export enum PostActionTypes {
   SET_POST = "SET_POST",
   ADD_COMMENT = "ADD_COMMENT",
   ADD_COMMENT_FETCH = "ADD_COMMENT_FETCH",
+  REMOVE_COMMENT = "REMOVE_COMMENT",
+  REMOVE_COMMENT_FETCH = "REMOVE_COMMENT_FETCH ",
 }
 export type PostState = {
   posts: {
@@ -37,8 +39,13 @@ export type AddCommentAction = {
   type: PostActionTypes.ADD_COMMENT;
   payload: any;
 };
+export type RemoveCommentAction = {
+  type: PostActionTypes.REMOVE_COMMENT;
+  payload: any;
+};
 export type PostAction =
   | SetFetchPostsDataAction
   | AddPostAction
   | SetFetchPostsItemDataAction
-  | AddCommentAction;
+  | AddCommentAction
+  | RemoveCommentAction;

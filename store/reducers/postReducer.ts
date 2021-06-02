@@ -29,6 +29,10 @@ export const postReducer = produce(
       case PostActionTypes.ADD_COMMENT:
         typeof window !== "undefined" &&
           draft.post.data.commentsPost.push(action.payload.data);
+      case PostActionTypes.REMOVE_COMMENT:
+        draft.post.data.commentsPost = draft.post.data.commentsPost.filter(
+          (item) => item.id != action.payload.data.commentId
+        );
 
       default:
         break;
@@ -66,5 +70,13 @@ export const addComment = (payload: any) => ({
 });
 export const addCommentFetch = (payload: any) => ({
   type: PostActionTypes.ADD_COMMENT_FETCH,
+  payload,
+});
+export const removeComment = (payload: any) => ({
+  type: PostActionTypes.REMOVE_COMMENT,
+  payload,
+});
+export const removeCommentFetch = (payload: any) => ({
+  type: PostActionTypes.REMOVE_COMMENT_FETCH,
   payload,
 });
