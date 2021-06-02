@@ -49,3 +49,12 @@ export const setToken = (payload: any) => ({
   type: UserActionTypes.SET_TOKEN,
   payload,
 });
+
+export const loginToken = (payload: any) => ({
+  type: UserActionTypes.LOGIN_TOKEN,
+  payload,
+});
+export const registerToken = (payload: any) => ({
+  type: UserActionTypes.REGISTER_TOKEN,
+  payload,
+});

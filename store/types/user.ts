@@ -4,6 +4,8 @@ export enum UserActionTypes {
   SET_USERS = "SET_USERS",
   SET_USER = "SET_USER",
   SET_TOKEN = "SET_TOKEN",
+  LOGIN_TOKEN = "LOGIN_TOKEN",
+  REGISTER_TOKEN = "REGISTER_TOKEN",
 }
 export type SetFetchUsersDataAction = {
   type: UserActionTypes.SET_FETCH_USERS_DATA;

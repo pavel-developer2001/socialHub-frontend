@@ -15,7 +15,7 @@ import MailOutline from "@material-ui/icons/MailOutline";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/dist/client/router";
-import { setToken } from "../../store/reducers/userReducer";
+import { registerToken, setToken } from "../../store/reducers/userReducer";
 import { useDispatch } from "react-redux";
 
 interface State {
@@ -61,16 +61,8 @@ const Register = () => {
   const handleRegisterUser = async (e: any) => {
     e.preventDefault();
     try {
-      const responce = await SocialHubApi.post("/users/register", {
-        name,
-        email,
-        password,
-        password2,
-      });
-      console.log(responce);
-      localStorage.setItem("user", JSON.stringify(responce.data.data));
-      localStorage.setItem("token", responce.data.token);
-      dispatch(setToken(responce.data.token));
+      const payload = { name, email, password, password2 };
+      dispatch(registerToken(payload));
       router.push("/");
     } catch (error) {
       console.log(error);

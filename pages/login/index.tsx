@@ -16,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import SocialHubApi from "../../apis/SocialHubApi";
 import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/reducers/userReducer";
+import { loginToken, setToken } from "../../store/reducers/userReducer";
 
 interface State {
   amount: string;
@@ -61,14 +61,8 @@ const Login = () => {
   const handleLoginUser = async (e: any) => {
     e.preventDefault();
     try {
-      const responce = await SocialHubApi.post("/users/login", {
-        email,
-        password,
-      });
-      console.log(responce);
-      localStorage.setItem("user", JSON.stringify(responce.data.data));
-      localStorage.setItem("token", responce.data.token);
-      dispatch(setToken(responce.data.token));
+      const payload = { email, password };
+      dispatch(loginToken(payload));
       router.push("/");
     } catch (error) {
       console.log(error);
