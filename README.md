@@ -1,6 +1,6 @@
 # SocialHub - простая социальная сеть
 
-## Написана на Next js, Redux(Redux-Saga), немного TypeScript
+## Написана на Next js, Redux(Redux-Saga, Immer js), немного TypeScript
 
 ### Версия 0.1.0
 
