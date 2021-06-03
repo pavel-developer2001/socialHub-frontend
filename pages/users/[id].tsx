@@ -10,7 +10,6 @@ import { wrapper } from "../../store";
 import { END } from "redux-saga";
 import { setUser } from "../../store/reducers/userReducer";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/dist/client/router";
 
 const Users = () => {
   const { user } = useSelector((state: any) => state.user);

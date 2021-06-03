@@ -1,0 +1,13 @@
+.groupPageHead {
+  padding: 10px 15px;
+  width: fit-content;
+  text-align: center;
+}
+.groupPageHeadAvatar {
+  margin: 0 auto;
+}
+.groupPageBody {
+  margin: 35px 0px;
+  display: flex;
+  justify-content: space-between;
+}

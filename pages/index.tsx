@@ -1,10 +1,7 @@
-import { Router, useRouter } from "next/dist/client/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setToken, setUsers } from "../store/reducers/userReducer";
-
+import { setToken } from "../store/reducers/userReducer";
 import MainLayout from "../layouts/MainLayout";
-
 import { wrapper } from "../store";
 import { END } from "redux-saga";
 import Login from "./login";
@@ -12,17 +9,10 @@ import { setPosts } from "../store/reducers/postReducer";
 import PostList from "../components/PostList";
 import AddPost from "../components/AddPost";
 
-//TODO:  Сделать большой разделл "Сообщества": 1. Получение всех Сообществ, 2. Страница конкретного сообщества(1. Вывод участников сообщества и
-// выделить создателя сообщества(Admin), 2 Вывод постов сообщества,комментариев 3 Создание нового сообщества(название сообщества, описание сообщества, аватарка сообщества)
-// 4 Добавить кнопку "присоединиться","отписаться" )
-
 const Home = () => {
-  const router = useRouter();
+  const { token } = useSelector((state: any) => state.user);
 
-  //@ts-ignore
-  const { token } = useSelector((state) => state.user);
-  //@ts-ignore
-  const { posts, loading } = useSelector((state) => state.post);
+  const { posts, loading } = useSelector((state: any) => state.post);
 
   const dispatch = useDispatch();
   React.useEffect(() => {

@@ -1,9 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import styles from "../login/Login.module.css";
-import SocialHubApi from "../../apis/SocialHubApi";
-
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Input from "@material-ui/core/Input";
@@ -15,7 +12,7 @@ import MailOutline from "@material-ui/icons/MailOutline";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useRouter } from "next/dist/client/router";
-import { registerToken, setToken } from "../../store/reducers/userReducer";
+import { registerToken } from "../../store/reducers/userReducer";
 import { useDispatch } from "react-redux";
 
 interface State {

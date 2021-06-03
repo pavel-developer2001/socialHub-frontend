@@ -1,0 +1,22 @@
+.groupMembers {
+  padding: 15px 20px;
+  width: fit-content;
+  height: fit-content;
+  /* position: fixed; */
+}
+.groupMembersBody {
+  height: 290px;
+  overflow: auto;
+  padding: 0px 15px;
+}
+.groupMembersItem {
+  padding: 10px 5px;
+  border: 1px solid purple;
+  border-radius: 16px;
+  display: flex;
+  margin: 15px 0px;
+  align-items: center;
+}
+.groupMembersItemTitle {
+  margin: 0px 10px;
+}
