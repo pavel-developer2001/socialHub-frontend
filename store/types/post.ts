@@ -10,14 +10,37 @@ export enum PostActionTypes {
   REMOVE_COMMENT = "REMOVE_COMMENT",
   REMOVE_COMMENT_FETCH = "REMOVE_COMMENT_FETCH ",
 }
+
+export type IPost = {
+  id: number;
+  author: string;
+  postText: string;
+  picturePost: string | null;
+  countLikes: number;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+};
+
+export type IComment = {
+  id: number;
+  author: string;
+  commentText: string;
+  countCommentsLikes: number;
+  createdAt: string;
+  updatedAt: string;
+  postId: number;
+  userId: number;
+};
+
 export type PostState = {
   posts: {
-    data: any[];
+    data: IPost[];
   };
   post: {
     data: {
       post: {};
-      commentsPost: any[];
+      commentsPost: IComment[];
     };
   };
   loading: boolean;
@@ -25,23 +48,23 @@ export type PostState = {
 
 export type SetFetchPostsDataAction = {
   type: PostActionTypes.SET_FETCH_POSTS_DATA;
-  payload: any;
+  payload: { data: IPost[] };
 };
 export type AddPostAction = {
   type: PostActionTypes.ADD_POST;
-  payload: any;
+  payload: { data: IPost };
 };
 export type SetFetchPostsItemDataAction = {
   type: PostActionTypes.SET_FETCH_POSTS_ITEM_DATA;
-  payload: any;
+  payload: { data: IPost[] };
 };
 export type AddCommentAction = {
   type: PostActionTypes.ADD_COMMENT;
-  payload: any;
+  payload: { data: Array<IComment> };
 };
 export type RemoveCommentAction = {
   type: PostActionTypes.REMOVE_COMMENT;
-  payload: any;
+  payload: { data: IComment };
 };
 export type PostAction =
   | SetFetchPostsDataAction

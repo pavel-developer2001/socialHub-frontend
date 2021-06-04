@@ -7,25 +7,33 @@ export enum UserActionTypes {
   LOGIN_TOKEN = "LOGIN_TOKEN",
   REGISTER_TOKEN = "REGISTER_TOKEN",
 }
+export type IUser = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+};
 export type SetFetchUsersDataAction = {
   type: UserActionTypes.SET_FETCH_USERS_DATA;
-  payload: any;
+  payload: Array<IUser>;
 };
 export type SetFetchUsersItemAction = {
   type: UserActionTypes.SET_FETCH_USERS_ITEM_DATA;
-  payload: any;
+  payload: IUser;
 };
 export type SetUsersAction = {
   type: UserActionTypes.SET_USERS;
-  payload: any;
+  payload: Array<IUser>;
 };
 export type SetUserAction = {
   type: UserActionTypes.SET_USER;
-  payload: any;
+  payload: IUser;
 };
 export type SetTokenAction = {
   type: UserActionTypes.SET_TOKEN;
-  payload: any;
+  payload: string;
 };
 export type UserAction =
   | SetFetchUsersDataAction
@@ -35,8 +43,8 @@ export type UserAction =
   | SetFetchUsersItemAction;
 
 export type UserState = {
-  users: any[];
-  user: any[];
+  users: Array<IUser>;
+  user: IUser[];
   token: string;
   loading: boolean;
 };
