@@ -21,6 +21,7 @@ export const userReducer = produce(
       case UserActionTypes.SET_FETCH_USERS_ITEM_DATA:
         draft.user = action.payload;
         draft.loading = false;
+        break;
       default:
         break;
     }
