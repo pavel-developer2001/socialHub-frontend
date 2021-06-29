@@ -9,25 +9,25 @@ import { PostsApi } from "../../apis/postsApi";
 
 function* fetchPostsWorker() {
   try {
-    const posts = yield call(PostsApi.getFetchPosts);
+    const posts: Promise<any> = yield call(PostsApi.getFetchPosts);
     yield put(setFetchPostsData(posts));
   } catch (e) {
     console.log(e);
   }
 }
 
-function* addPostWorker({ payload: payload }) {
+function* addPostWorker({ payload: payload }: any) {
   try {
-    const newPost = yield call(PostsApi.addFetchPost, payload);
+    const newPost: Promise<any> = yield call(PostsApi.addFetchPost, payload);
     yield put(addPost(newPost));
   } catch (error) {
     console.log(error);
   }
 }
 
-function* fetchPostWorker({ payload: id }) {
+function* fetchPostWorker({ payload: id }: any) {
   try {
-    const post = yield call(PostsApi.getFetchPost, id);
+    const post: Promise<any> = yield call(PostsApi.getFetchPost, id);
     yield put(setFetchPostsItemData(post));
   } catch (error) {
     console.log(error);

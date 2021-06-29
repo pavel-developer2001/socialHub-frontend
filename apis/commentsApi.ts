@@ -1,6 +1,6 @@
 import SocialHubApi from "./SocialHubApi";
 export const CommentsApi = {
-  async addFetchComment(payload) {
+  async addFetchComment(payload: object) {
     try {
       const data = await SocialHubApi.post("/comments/create", payload);
       return data.data;
@@ -8,7 +8,7 @@ export const CommentsApi = {
       console.log(error);
     }
   },
-  async removeFetchComment(id) {
+  async removeFetchComment(id: number) {
     try {
       const data = await SocialHubApi.delete(`/comments/?commentId=${id}`);
       return data.data;

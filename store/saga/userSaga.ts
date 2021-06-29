@@ -8,22 +8,22 @@ import { UserActionTypes } from "../types/user";
 import { UsersApi } from "../../apis/usersApi";
 
 function* fetchUsersWorker() {
-  const users = yield call(UsersApi.getFetchUsers);
+  const users: Promise<any> = yield call(UsersApi.getFetchUsers);
   yield put(setFetchUsersData(users));
 }
 
-function* fetchUserWorker({ payload: id }) {
-  const user = yield call(UsersApi.getFetchUser, id);
+function* fetchUserWorker({ payload: id }: any) {
+  const user: Promise<any> = yield call(UsersApi.getFetchUser, id);
   yield put(setFetchUsersItemData(user));
 }
 
-function* loginUserWorker({ payload: payload }) {
-  const token = yield call(UsersApi.loginUser, payload);
+function* loginUserWorker({ payload: payload }: any) {
+  const token: Promise<any> = yield call(UsersApi.loginUser, payload);
   yield put(setToken(token));
 }
 
-function* registerUserWorker({ payload: payload }) {
-  const token = yield call(UsersApi.registerUser, payload);
+function* registerUserWorker({ payload: payload }: any) {
+  const token: Promise<any> = yield call(UsersApi.registerUser, payload);
   yield put(setToken(token));
 }
 export function* userWatcher() {

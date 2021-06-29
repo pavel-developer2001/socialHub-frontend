@@ -8,7 +8,7 @@ export const UsersApi = {
       console.log(error);
     }
   },
-  async getFetchUser(id) {
+  async getFetchUser(id: number) {
     try {
       const data = await SocialHubApi.get(`/users/` + id);
       return data.data;
@@ -16,13 +16,13 @@ export const UsersApi = {
       console.log(error);
     }
   },
-  async loginUser(payload) {
+  async loginUser(payload: object) {
     const data = await SocialHubApi.post("/users/login", payload);
     window.localStorage.setItem("token", data.data.token);
     window.localStorage.setItem("user", JSON.stringify(data.data.data));
     return data.data.token;
   },
-  async registerUser(payload) {
+  async registerUser(payload: object) {
     const data = await SocialHubApi.post("/users/register", payload);
     window.localStorage.setItem("token", data.data.token);
     window.localStorage.setItem("user", JSON.stringify(data.data.data));

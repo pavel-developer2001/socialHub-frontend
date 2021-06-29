@@ -3,18 +3,24 @@ import { addComment, removeComment } from "../reducers/postReducer";
 import { PostActionTypes } from "../types/post";
 import { CommentsApi } from "../../apis/commentsApi";
 
-function* addCommentWorker({ payload: payload }) {
+function* addCommentWorker({ payload: payload }: any) {
   try {
-    const newComment = yield call(CommentsApi.addFetchComment, payload);
+    const newComment: Promise<any> = yield call(
+      CommentsApi.addFetchComment,
+      payload
+    );
     yield put(addComment(newComment));
   } catch (error) {
     console.log(error);
   }
 }
 
-function* removeCommentWorker({ payload: id }) {
+function* removeCommentWorker({ payload: id }: any) {
   try {
-    const removeOldComment = yield call(CommentsApi.removeFetchComment, id);
+    const removeOldComment: Promise<any> = yield call(
+      CommentsApi.removeFetchComment,
+      id
+    );
     yield put(removeComment(removeOldComment));
   } catch (error) {
     console.log(error);
