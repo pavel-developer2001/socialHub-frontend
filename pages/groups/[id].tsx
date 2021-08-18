@@ -8,9 +8,20 @@ import AddIcon from "@material-ui/icons/Add";
 import styles from "./GroupPage.module.css";
 import Button from "@material-ui/core/Button";
 import GroupMembers from "../../components/GroupMembers";
-import GroupPostList from "../../components/GroupPostList";
+import PostList from "../../components/PostList";
 
 const GroupPage = () => {
+  const fakePosts = [
+    {
+      id: 1,
+      userId: 7,
+      author: "pro",
+      postText: "test group",
+      countLikes: 10,
+      createdAt: "2021-08-18T11:49:35.179Z",
+      picturePost: "",
+    },
+  ];
   return (
     <MainLayout>
       <Paper className={styles.groupPageHead}>
@@ -28,7 +39,7 @@ const GroupPage = () => {
         </Button>
       </Paper>
       <div className={styles.groupPageBody}>
-        <GroupPostList />
+        <PostList loading={false} posts={fakePosts} />
         <GroupMembers />
       </div>
     </MainLayout>
