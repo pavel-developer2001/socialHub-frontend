@@ -19,6 +19,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { setToken } from "../../store/reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
+import jwt_decode from "jwt-decode";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,8 +65,9 @@ const Navbar = () => {
     React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const users: any =
-    typeof window !== "undefined" && localStorage.getItem("user");
+
+  const token: any =
+    typeof window !== "undefined" && localStorage.getItem("token");
   const router = useRouter();
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -82,7 +84,7 @@ const Navbar = () => {
   const handleOpenProfile = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    router.push(`/users/${JSON.parse(users).id}`);
+    router.push(`/users/${token ? jwt_decode(token).id : null}`);
   };
   const dispatch = useDispatch();
   const handleExitUser = () => {
@@ -90,7 +92,6 @@ const Navbar = () => {
     handleMobileMenuClose();
     router.push("/login");
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     dispatch(setToken(""));
   };
 

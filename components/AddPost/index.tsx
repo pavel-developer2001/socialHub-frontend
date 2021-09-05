@@ -6,19 +6,22 @@ import TextField from "@material-ui/core/TextField";
 import styles from "./AddPost.module.css";
 import { useDispatch } from "react-redux";
 import { addPostFetch } from "../../store/reducers/postReducer";
+import jwt_decode from "jwt-decode";
 
 const AddPost = () => {
   const [postText, setPostText] = React.useState("");
   const dispatch = useDispatch();
-  const users: any =
-    typeof window !== "undefined" && localStorage.getItem("user");
+  const token: string | false | null =
+    typeof window !== "undefined" && localStorage.getItem("token");
   const handleAddPost = async (e: any) => {
     e.preventDefault();
+    const author = token ? jwt_decode(token).user : null;
+    const userId = token ? jwt_decode(token).id : null;
     try {
       const payload = {
-        author: JSON.parse(users).name,
+        author: author,
         postText,
-        userId: JSON.parse(users).id,
+        userId: userId,
       };
       await dispatch(addPostFetch(payload));
       setPostText("");
