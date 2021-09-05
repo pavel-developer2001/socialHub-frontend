@@ -19,6 +19,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { useDispatch } from "react-redux";
 import { removeCommentFetch } from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
+import { token } from "../../utils/token";
 
 const CommentListItem: React.FC<any> = ({
   name,
@@ -28,8 +29,6 @@ const CommentListItem: React.FC<any> = ({
   date,
   userId,
 }) => {
-  const token: any =
-    typeof window !== "undefined" && localStorage.getItem("token");
   const myId = token ? jwt_decode(token).id : null;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -87,23 +86,6 @@ const CommentListItem: React.FC<any> = ({
           </MenuItem>
         </Menu>
       ) : null}
-      {/* <Menu
-        id='fade-menu'
-        MenuListProps={{
-          "aria-labelledby": "fade-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-      >
-        <MenuItem onClick={handleRemoveComment}>
-          <DeleteIcon /> Удалить
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <EditIcon /> Редактировать
-        </MenuItem>
-      </Menu> */}
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
           {text}

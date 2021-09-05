@@ -7,12 +7,12 @@ import styles from "./AddPost.module.css";
 import { useDispatch } from "react-redux";
 import { addPostFetch } from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
+import { token } from "../../utils/token";
 
 const AddPost = () => {
   const [postText, setPostText] = React.useState("");
   const dispatch = useDispatch();
-  const token: string | false | null =
-    typeof window !== "undefined" && localStorage.getItem("token");
+
   const handleAddPost = async (e: any) => {
     e.preventDefault();
     const author = token ? jwt_decode(token).user : null;

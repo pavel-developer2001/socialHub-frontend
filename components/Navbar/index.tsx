@@ -20,6 +20,7 @@ import { setToken } from "../../store/reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import jwt_decode from "jwt-decode";
+import { token } from "../../utils/token";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,8 +67,6 @@ const Navbar = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const token: any =
-    typeof window !== "undefined" && localStorage.getItem("token");
   const router = useRouter();
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {

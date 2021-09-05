@@ -6,13 +6,13 @@ import styles from "./AddComment.module.css";
 import { useDispatch } from "react-redux";
 import { addCommentFetch } from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
+import { token } from "../../utils/token";
 
 const AddComment: React.FC<any> = ({ postId }) => {
   const [commentText, setCommentText] = React.useState("");
 
   const dispatch = useDispatch();
-  const token: string | false | null =
-    typeof window !== "undefined" && localStorage.getItem("token");
+
   const handleAddComment = async (e: any) => {
     e.preventDefault();
     const author = token ? jwt_decode(token).user : null;
