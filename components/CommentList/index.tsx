@@ -18,6 +18,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useDispatch } from "react-redux";
 import { removeCommentFetch } from "../../store/reducers/postReducer";
+import jwt_decode from "jwt-decode";
 
 const CommentListItem: React.FC<any> = ({
   name,
@@ -25,7 +26,11 @@ const CommentListItem: React.FC<any> = ({
   text,
   likes,
   date,
+  userId,
 }) => {
+  const token: any =
+    typeof window !== "undefined" && localStorage.getItem("token");
+  const myId = token ? jwt_decode(token).id : null;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -57,13 +62,32 @@ const CommentListItem: React.FC<any> = ({
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <MoreVertIcon />
+            {myId == userId ? <MoreVertIcon /> : null}
           </IconButton>
         }
         title={name}
         subheader={date}
       />
-      <Menu
+      {myId == userId ? (
+        <Menu
+          id='fade-menu'
+          MenuListProps={{
+            "aria-labelledby": "fade-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <MenuItem onClick={handleRemoveComment}>
+            <DeleteIcon /> Удалить
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <EditIcon /> Редактировать
+          </MenuItem>
+        </Menu>
+      ) : null}
+      {/* <Menu
         id='fade-menu'
         MenuListProps={{
           "aria-labelledby": "fade-button",
@@ -79,7 +103,7 @@ const CommentListItem: React.FC<any> = ({
         <MenuItem onClick={handleClose}>
           <EditIcon /> Редактировать
         </MenuItem>
-      </Menu>
+      </Menu> */}
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
           {text}
@@ -98,6 +122,7 @@ const CommentListItem: React.FC<any> = ({
 };
 
 const CommentList: React.FC<any> = ({ comments, loading }) => {
+  // console.log("COMMENTA", comments);
   return (
     <div className={styles.commentList}>
       <Typography variant='h5'>Комментарии:</Typography>
@@ -112,6 +137,7 @@ const CommentList: React.FC<any> = ({ comments, loading }) => {
             text={comment.commentText}
             likes={comment.countCommentsLikes}
             date={comment.createdAt}
+            userId={comment.userId}
           />
         ))
       ) : (
