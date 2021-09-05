@@ -11,6 +11,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import jwt_decode from "jwt-decode";
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FiberNewIcon from "@material-ui/icons/FiberNew";
@@ -24,13 +25,13 @@ import Navbar from "../components/Navbar";
 const drawerWidth = 240;
 
 const MainLayout: React.FC<any> = ({ children }) => {
-  const users: any =
-    typeof window !== "undefined" && localStorage.getItem("user");
+  const token: any =
+    typeof window !== "undefined" && localStorage.getItem("token");
   const menuItems = [
     {
       id: 1,
       name: "Моя страница",
-      link: `/users/${JSON.parse(users).id}`,
+      link: `/users/${token ? jwt_decode(token).id : null}`,
       icon: <AccountCircleIcon />,
     },
     {

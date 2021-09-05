@@ -5,22 +5,24 @@ import Button from "@material-ui/core/Button";
 import styles from "./AddComment.module.css";
 import { useDispatch } from "react-redux";
 import { addCommentFetch } from "../../store/reducers/postReducer";
+import jwt_decode from "jwt-decode";
 
 const AddComment: React.FC<any> = ({ postId }) => {
   const [commentText, setCommentText] = React.useState("");
 
   const dispatch = useDispatch();
-  const users: any =
-    typeof window !== "undefined" && localStorage.getItem("user");
-
+  const token: string | false | null =
+    typeof window !== "undefined" && localStorage.getItem("token");
   const handleAddComment = async (e: any) => {
     e.preventDefault();
+    const author = token ? jwt_decode(token).user : null;
+    const userId = token ? jwt_decode(token).id : null;
     try {
       const payload = {
-        author: JSON.parse(users).name,
+        author: author,
         commentText,
         postId,
-        userId: JSON.parse(users).id,
+        userId: userId,
       };
       await dispatch(addCommentFetch(payload));
       setCommentText("");
