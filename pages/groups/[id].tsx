@@ -8,42 +8,62 @@ import AddIcon from "@material-ui/icons/Add";
 import styles from "./GroupPage.module.css";
 import Button from "@material-ui/core/Button";
 import GroupMembers from "../../components/GroupMembers";
-import PostList from "../../components/PostList";
+import { setGroup } from "../../store/reducers/groupReducer";
+import { wrapper } from "../../store";
+import { END } from "redux-saga";
+import { useSelector } from "react-redux";
+import GroupPostList from "../../components/GroupPostList";
 
 const GroupPage = () => {
-  const fakePosts = [
-    {
-      id: 1,
-      userId: 7,
-      author: "pro",
-      postText: "test group",
-      countLikes: 10,
-      createdAt: "2021-08-18T11:49:35.179Z",
-      picturePost: "",
-    },
-  ];
+  const group = useSelector<any>((state) => state.group.group.data);
+  const loading = useSelector<any>((state) => state.group.loading);
+
   return (
     <MainLayout>
-      <Paper className={styles.groupPageHead}>
-        <Avatar
-          className={styles.groupPageHeadAvatar}
-          sx={{ width: 76, height: 76, bgcolor: deepPurple[500] }}
-        >
-          OP
-        </Avatar>
-        <Typography className='' variant='h6' gutterBottom component='div'>
-          Google Translate
-        </Typography>
-        <Button variant='outlined' startIcon={<AddIcon />}>
-          Присоединиться
-        </Button>
-      </Paper>
-      <div className={styles.groupPageBody}>
-        <PostList loading={false} posts={fakePosts} />
-        <GroupMembers />
-      </div>
+      {loading ? (
+        <p>loading</p>
+      ) : (
+        <>
+          {" "}
+          <Paper className={styles.groupPageHead}>
+            {group?.group.pictureGroup ? (
+              group?.group.pictureGroup
+            ) : (
+              <Avatar
+                className={styles.groupPageHeadAvatar}
+                sx={{ width: 76, height: 76, bgcolor: deepPurple[500] }}
+              >
+                OP
+              </Avatar>
+            )}
+
+            <Typography className='' variant='h6' gutterBottom component='div'>
+              {group?.group.titleGroup}
+            </Typography>
+            <p>{group?.group.description}</p>
+            <div>Сообщество было создано {group?.group.createdAt}</div>
+            <Button variant='outlined' startIcon={<AddIcon />}>
+              Присоединиться
+            </Button>
+          </Paper>
+          <div className={styles.groupPageBody}>
+            <GroupPostList />
+            <GroupMembers members={group?.groupMembers} />
+          </div>
+        </>
+      )}
     </MainLayout>
   );
 };
-
+export const getServerSideProps = wrapper.getStaticProps(
+  async ({ store, params }) => {
+    //@ts-ignore
+    if (!store.getState().placeholderData) {
+      store.dispatch(setGroup(params?.id));
+      store.dispatch(END);
+    }
+    //@ts-ignore
+    await store.sagaTask.toPromise();
+  }
+);
 export default GroupPage;

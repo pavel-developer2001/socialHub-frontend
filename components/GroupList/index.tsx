@@ -40,7 +40,7 @@ const GroupListItem: React.FC<any> = ({
 const GroupList: React.FC<any> = ({ groups }) => {
   return (
     <div className={styles.groupList}>
-      {groups.map((group: any) => (
+      {groups?.map((group: any) => (
         <GroupListItem
           key={group.id}
           groupId={group.id}

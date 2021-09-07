@@ -8,8 +8,8 @@ import { wrapper } from "../../store";
 import { setGroups } from "../../store/reducers/groupReducer";
 
 const Groups = () => {
-  const groups: any = useSelector((state) => state.group.groups.data);
-  const loading: any = useSelector((state) => state.group.loading);
+  const groups = useSelector<any>((state) => state.group.groups.data);
+  const loading = useSelector<any>((state) => state.group.loading);
   return (
     <MainLayout>
       Сообщества
