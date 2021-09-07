@@ -13,6 +13,7 @@ import { wrapper } from "../../store";
 import { END } from "redux-saga";
 import { useSelector } from "react-redux";
 import GroupPostList from "../../components/GroupPostList";
+import AddGroupPost from "../../components/AddGroupPost";
 
 const GroupPage = () => {
   const group = useSelector<any>((state) => state.group.group.data);
@@ -46,6 +47,7 @@ const GroupPage = () => {
               Присоединиться
             </Button>
           </Paper>
+          <AddGroupPost />
           <div className={styles.groupPageBody}>
             <GroupPostList />
             <GroupMembers members={group?.groupMembers} />

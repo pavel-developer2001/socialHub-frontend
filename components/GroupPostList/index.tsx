@@ -22,11 +22,11 @@ const GroupPostListItem: React.FC<any> = ({}) => {
   const router = useRouter();
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.groupPostListItem}>
-      <Link href={``}>
+      <Link href={`/groups/8`}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-              R
+              G
             </Avatar>
           }
           title='Demon'
@@ -46,7 +46,7 @@ const GroupPostListItem: React.FC<any> = ({}) => {
         {" "}
         <Typography
           variant='body2'
-          // onClick={() => router.push(`/posts/${postId}`)}
+          onClick={() => router.push(`/groups/post/1`)}
           color='text.secondary'
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,

@@ -10,3 +10,9 @@
   height: 200px !important;
   object-fit: cover !important;
 }
+.block {
+  display: flex;
+}
+.rightBlock {
+  margin: 20px 50px;
+}

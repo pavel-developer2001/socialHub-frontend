@@ -1,0 +1,24 @@
+.postHead {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.postHeadUser {
+  display: flex;
+  justify-content: center;
+  margin: 0px 25px;
+}
+.postBody {
+  max-width: 700px;
+}
+.postImg {
+  width: 700px;
+  height: 430px;
+  object-fit: contain;
+}
+.postFooterRating {
+  display: flex;
+}
+.postFooterRatingCount {
+  padding: 15px 0px;
+}

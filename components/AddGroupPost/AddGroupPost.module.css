@@ -1,0 +1,9 @@
+.addPost {
+  margin: 25px 0px;
+  padding: 5px 10px;
+  display: inline-grid;
+  min-width: 360px;
+}
+.addPost__btn {
+  margin-top: 15px;
+}

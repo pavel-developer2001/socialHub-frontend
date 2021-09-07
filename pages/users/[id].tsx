@@ -10,6 +10,7 @@ import { wrapper } from "../../store";
 import { END } from "redux-saga";
 import { setUser } from "../../store/reducers/userReducer";
 import { useSelector } from "react-redux";
+import GroupsWithIHaveList from "../../components/GroupsWithIHaveList";
 
 const Users = () => {
   const { user } = useSelector((state: any) => state.user);
@@ -46,7 +47,12 @@ const Users = () => {
             <>
               {" "}
               <AddPost />
-              <PostList loading={loading} posts={user?.data?.postsUser} />
+              <div className={styles.block}>
+                <PostList loading={loading} posts={user?.data?.postsUser} />
+                <div className={styles.rightBlock}>
+                  <GroupsWithIHaveList />
+                </div>
+              </div>
             </>
           )}
         </div>

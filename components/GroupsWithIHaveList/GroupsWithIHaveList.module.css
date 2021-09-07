@@ -1,0 +1,10 @@
+.block {
+  padding: 10px;
+  height: 200px;
+  overflow: auto;
+}
+.blockItem {
+  display: flex;
+  border-bottom: 1px solid black;
+  padding: 5px 5px;
+}
