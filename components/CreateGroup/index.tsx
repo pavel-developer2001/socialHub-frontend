@@ -9,6 +9,10 @@ import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 
 import styles from "./CreateGroup.module.css";
+import { token } from "../../utils/token";
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { addGroup } from "../../store/reducers/groupReducer";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -26,7 +30,27 @@ function SimpleDialog(props: SimpleDialogProps) {
   const handleListItemClick = (value: string) => {
     onClose(value);
   };
+  const [titleGroup, setTitleGroup] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const creator = token ? jwt_decode(token).user : null;
+  const userId = token ? jwt_decode(token).id : null;
 
+  const dispatch = useDispatch();
+  const handleAddGroup = async (e: any) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        titleGroup,
+        description,
+        creatorGroup: creator,
+        userId: userId,
+      };
+      await dispatch(addGroup(payload));
+      setTitleGroup("");
+      setDescription("");
+      onClose(selectedValue);
+    } catch (error) {}
+  };
   return (
     <Dialog
       className={styles.createGroupModal}
@@ -40,6 +64,8 @@ function SimpleDialog(props: SimpleDialogProps) {
       <List>
         <ListItem>
           <TextField
+            value={titleGroup}
+            onChange={(e) => setTitleGroup(e.target.value)}
             id='standard-basic'
             label='Название сообщества'
             variant='standard'
@@ -49,13 +75,19 @@ function SimpleDialog(props: SimpleDialogProps) {
           <TextField
             id='standard-multiline-static'
             label='Описание сообщества'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             multiline
             rows={4}
             variant='standard'
           />
         </ListItem>
         <ListItem>
-          <Button variant='contained' startIcon={<AddIcon />}>
+          <Button
+            variant='contained'
+            onClick={handleAddGroup}
+            startIcon={<AddIcon />}
+          >
             Создать
           </Button>
         </ListItem>

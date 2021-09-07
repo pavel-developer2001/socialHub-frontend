@@ -2,7 +2,9 @@ import produce, { Draft } from "immer";
 import { GroupAction, GroupActionTypes, GroupState } from "../types/group";
 
 const initialState: GroupState = {
-  groups: [],
+  groups: {
+    data: [],
+  },
   group: [],
   loading: true,
 };
@@ -17,6 +19,9 @@ export const groupReducer = produce(
       case GroupActionTypes.SET_FETCH_GROUP_DATA:
         draft.group = action.payload;
         draft.loading = false;
+        break;
+      case GroupActionTypes.ADD_FETCH_GROUP_DATA:
+        draft.groups.data.push(action.payload.data.newGroup);
         break;
       default:
         break;
@@ -38,5 +43,13 @@ export const setFetchGroupData = (payload: any) => ({
 });
 export const setGroup = (payload: any) => ({
   type: GroupActionTypes.SET_GROUP,
+  payload,
+});
+export const addFetchGroupData = (payload: any) => ({
+  type: GroupActionTypes.ADD_FETCH_GROUP_DATA,
+  payload,
+});
+export const addGroup = (payload: any) => ({
+  type: GroupActionTypes.ADD_GROUP,
   payload,
 });

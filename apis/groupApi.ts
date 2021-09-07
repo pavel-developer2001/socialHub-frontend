@@ -16,4 +16,12 @@ export const GroupApi = {
       console.log(error);
     }
   },
+  async addFetchGroup(payload: object) {
+    try {
+      const data = await SocialHubApi.post("/groups/create", payload);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
