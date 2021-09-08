@@ -18,41 +18,39 @@ interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
 
-const GroupPostListItem: React.FC<any> = ({}) => {
+const GroupPostListItem: React.FC<any> = ({
+  groupId,
+  author,
+  date,
+  cover,
+  text,
+  likes,
+  id,
+}) => {
   const router = useRouter();
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.groupPostListItem}>
-      <Link href={`/groups/8`}>
+      <Link href={`/groups/` + groupId}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
               G
             </Avatar>
           }
-          title='Demon'
-          subheader='5 января 2020 года'
+          title={author}
+          subheader={date}
         />
       </Link>
-      <CardMedia
-        sx={{
-          height: 0,
-          paddingTop: "56.25%", // 16:9
-        }}
-        image='https://www.wallpaperup.com/uploads/wallpapers/2019/06/19/1326591/fec4c7fe5cbb97a66349828420b9240c.jpg'
-        title='Paella dish'
-      />
+      {cover ? cover : null}
 
       <CardContent>
         {" "}
         <Typography
           variant='body2'
-          onClick={() => router.push(`/groups/post/1`)}
+          onClick={() => router.push(`/groups/post/` + id)}
           color='text.secondary'
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-          expedita unde praesentium animi nesciunt quasi a beatae amet facere
-          quo, vero rerum distinctio itaque hic molestias, suscipit vel harum!
-          Corporis.
+          {text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -60,18 +58,27 @@ const GroupPostListItem: React.FC<any> = ({}) => {
           <FavoriteIcon />
         </IconButton>
         <Typography variant='body2' color='text.secondary'>
-          100
+          {likes}
         </Typography>
       </CardActions>
     </Card>
   );
 };
-const GroupPostList: React.FC<any> = () => {
+const GroupPostList: React.FC<any> = ({ groupPosts }) => {
   return (
     <div className={styles.groupPostList}>
-      <GroupPostListItem />
-      <GroupPostListItem />
-      <GroupPostListItem />
+      {groupPosts?.map((post: any) => (
+        <GroupPostListItem
+          key={post.id}
+          id={post.id}
+          author={post.groupPostAuthor}
+          text={post.groupPostText}
+          cover={post.groupPostPicture}
+          date={post.createdAt}
+          groupId={post.groupId}
+          likes={post.groupPostCountLikes}
+        />
+      ))}
     </div>
   );
 };

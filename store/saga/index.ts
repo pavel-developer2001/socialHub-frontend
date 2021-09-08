@@ -3,7 +3,14 @@ import { userWatcher } from "./userSaga";
 import { postWatcher } from "./postSaga";
 import { commentWatcher } from "./commentSaga";
 import { groupWatcher } from "./groupSaga";
+import { groupPostWatcher } from "./groupPostSaga";
 
 export function* rootWatcher() {
-  yield all([userWatcher(), postWatcher(), commentWatcher(), groupWatcher()]);
+  yield all([
+    userWatcher(),
+    postWatcher(),
+    commentWatcher(),
+    groupWatcher(),
+    groupPostWatcher(),
+  ]);
 }

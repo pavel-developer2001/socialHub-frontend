@@ -11,14 +11,26 @@ import GroupMembers from "../../components/GroupMembers";
 import { setGroup } from "../../store/reducers/groupReducer";
 import { wrapper } from "../../store";
 import { END } from "redux-saga";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GroupPostList from "../../components/GroupPostList";
 import AddGroupPost from "../../components/AddGroupPost";
+import { setGroupPosts } from "../../store/reducers/groupPostReducer";
+import { useRouter } from "next/dist/client/router";
 
 const GroupPage = () => {
   const group = useSelector<any>((state) => state.group.group.data);
   const loading = useSelector<any>((state) => state.group.loading);
+  const loadingPosts = useSelector<any>((state) => state.groupPost.loading);
+  const groupPosts = useSelector<any>(
+    (state) => state.groupPost.groupPosts.data
+  );
 
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+  React.useEffect(() => {
+    dispatch(setGroupPosts(router.query.id));
+  }, []);
   return (
     <MainLayout>
       {loading ? (
@@ -47,9 +59,19 @@ const GroupPage = () => {
               Присоединиться
             </Button>
           </Paper>
-          <AddGroupPost />
+          <AddGroupPost
+            groupPostAuthor={group?.group.titleGroup}
+            groupId={group?.group.id}
+          />
           <div className={styles.groupPageBody}>
-            <GroupPostList />
+            {loadingPosts ? (
+              <p>loading</p>
+            ) : groupPosts.length > 0 ? (
+              <GroupPostList groupPosts={groupPosts} />
+            ) : (
+              <p>Пусто</p>
+            )}
+
             <GroupMembers members={group?.groupMembers} />
           </div>
         </>
