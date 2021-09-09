@@ -7,6 +7,7 @@ const initialState: GroupState = {
   },
   group: [],
   loading: true,
+  signed: false,
 };
 
 export const groupReducer = produce(
@@ -22,6 +23,16 @@ export const groupReducer = produce(
         break;
       case GroupActionTypes.ADD_FETCH_GROUP_DATA:
         draft.groups.data.push(action.payload.data.newGroup);
+        break;
+      case GroupActionTypes.SIGN_MEMBER_FETCH_DATA:
+        draft.groups.data.groupMembers.push(action.payload.data.newMember);
+        draft.signed = true;
+        break;
+      case GroupActionTypes.UNSUBCRIBE_MEMBER_FETCH_DATA:
+        draft.groups.data.groupMembers = draft.groups.data.groupMembers.filter(
+          (member: any) => member.id != action.payload.data.newMember.id
+        );
+        draft.signed = false;
         break;
       default:
         break;
@@ -51,5 +62,21 @@ export const addFetchGroupData = (payload: any) => ({
 });
 export const addGroup = (payload: any) => ({
   type: GroupActionTypes.ADD_GROUP,
+  payload,
+});
+export const signMemberFetchData = (payload: any) => ({
+  type: GroupActionTypes.SIGN_MEMBER_FETCH_DATA,
+  payload,
+});
+export const signMember = (payload: any) => ({
+  type: GroupActionTypes.SIGN_MEMBER,
+  payload,
+});
+export const unsubcribeMemberFetchData = (payload: any) => ({
+  type: GroupActionTypes.UNSUBCRIBE_MEMBER_FETCH_DATA,
+  payload,
+});
+export const unsubcribeMember = (payload: any) => ({
+  type: GroupActionTypes.UNSUBCRIBE_MEMBER,
   payload,
 });

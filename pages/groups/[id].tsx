@@ -8,7 +8,11 @@ import AddIcon from "@material-ui/icons/Add";
 import styles from "./GroupPage.module.css";
 import Button from "@material-ui/core/Button";
 import GroupMembers from "../../components/GroupMembers";
-import { setGroup } from "../../store/reducers/groupReducer";
+import {
+  setGroup,
+  signMember,
+  unsubcribeMember,
+} from "../../store/reducers/groupReducer";
 import { wrapper } from "../../store";
 import { END } from "redux-saga";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +20,9 @@ import GroupPostList from "../../components/GroupPostList";
 import AddGroupPost from "../../components/AddGroupPost";
 import { setGroupPosts } from "../../store/reducers/groupPostReducer";
 import { useRouter } from "next/dist/client/router";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { token } from "../../utils/token";
+import jwt_decode from "jwt-decode";
 
 const GroupPage = () => {
   const group = useSelector<any>((state) => state.group.group.data);
@@ -24,13 +31,29 @@ const GroupPage = () => {
   const groupPosts = useSelector<any>(
     (state) => state.groupPost.groupPosts.data
   );
-
   const dispatch = useDispatch();
-
   const router = useRouter();
   React.useEffect(() => {
     dispatch(setGroupPosts(router.query.id));
   }, []);
+
+  const [isSign, setIsSign] = React.useState<boolean>(false);
+  const nameMember = token ? jwt_decode(token).user : null;
+  const userId = token ? jwt_decode(token).id : null;
+  const handleSigned = async () => {
+    try {
+      const payload = { nameMember, groupId: group?.group.id, userId };
+      await dispatch(signMember(payload));
+      setIsSign(true);
+    } catch (error) {}
+  };
+  const handleUnsubscribe = async () => {
+    try {
+      const payload = { groupId: group?.group.id, userId };
+      await dispatch(unsubcribeMember(payload));
+      setIsSign(false);
+    } catch (error) {}
+  };
   return (
     <MainLayout>
       {loading ? (
@@ -55,9 +78,23 @@ const GroupPage = () => {
             </Typography>
             <p>{group?.group.description}</p>
             <div>Сообщество было создано {group?.group.createdAt}</div>
-            <Button variant='outlined' startIcon={<AddIcon />}>
-              Присоединиться
-            </Button>
+            {isSign ? (
+              <Button
+                variant='outlined'
+                onClick={handleUnsubscribe}
+                startIcon={<RemoveIcon />}
+              >
+                Отписаться
+              </Button>
+            ) : (
+              <Button
+                variant='outlined'
+                onClick={handleSigned}
+                startIcon={<AddIcon />}
+              >
+                Присоединиться
+              </Button>
+            )}
           </Paper>
           <AddGroupPost
             groupPostAuthor={group?.group.titleGroup}
