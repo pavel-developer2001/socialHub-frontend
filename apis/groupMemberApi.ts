@@ -18,4 +18,14 @@ export const GroupMemberApi = {
       console.log(error);
     }
   },
+  async checkSignGroupMember(payload: any) {
+    try {
+      const data = await SocialHubApi.get(
+        `/groups/members/check?groupId=${payload.groupId}&userId=${payload.userId}`
+      );
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

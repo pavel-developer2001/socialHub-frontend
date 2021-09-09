@@ -3,7 +3,7 @@ import { GroupAction, GroupActionTypes, GroupState } from "../types/group";
 
 const initialState: GroupState = {
   groups: {
-    data: [],
+    data: { groupMembers: [] },
   },
   group: [],
   loading: true,
@@ -25,14 +25,18 @@ export const groupReducer = produce(
         draft.groups.data.push(action.payload.data.newGroup);
         break;
       case GroupActionTypes.SIGN_MEMBER_FETCH_DATA:
-        draft.groups.data.groupMembers.push(action.payload.data.newMember);
+        draft.groups.data.groupMembers.push(action.payload.data);
         draft.signed = true;
         break;
       case GroupActionTypes.UNSUBCRIBE_MEMBER_FETCH_DATA:
         draft.groups.data.groupMembers = draft.groups.data.groupMembers.filter(
-          (member: any) => member.id != action.payload.data.newMember.id
+          (member: any) => member.id != action.payload.data.id
         );
         draft.signed = false;
+        break;
+      case GroupActionTypes.CHECK_SIGN_FETCH_DATA:
+        draft.signed = action.payload;
+        draft.loading = false;
         break;
       default:
         break;
@@ -78,5 +82,13 @@ export const unsubcribeMemberFetchData = (payload: any) => ({
 });
 export const unsubcribeMember = (payload: any) => ({
   type: GroupActionTypes.UNSUBCRIBE_MEMBER,
+  payload,
+});
+export const checkSignFetchData = (payload: any) => ({
+  type: GroupActionTypes.CHECK_SIGN_FETCH_DATA,
+  payload,
+});
+export const checkSign = (payload: any) => ({
+  type: GroupActionTypes.CHECK_SIGN,
   payload,
 });

@@ -9,6 +9,8 @@ export enum GroupActionTypes {
   SIGN_MEMBER = "SIGN_MEMBER",
   UNSUBCRIBE_MEMBER_FETCH_DATA = "UNSUBCRIBE_MEMBER_FETCH_DATA ",
   UNSUBCRIBE_MEMBER = "UNSUBCRIBE_MEMBER",
+  CHECK_SIGN_FETCH_DATA = "CHECK_SIGN_FETCH_DATA",
+  CHECK_SIGN = "CHECK_SIGN",
 }
 
 export type SetFetchGroupsDataAction = {
@@ -32,12 +34,17 @@ export type UnsubcribeMemberFetchData = {
   type: GroupActionTypes.UNSUBCRIBE_MEMBER_FETCH_DATA;
   payload: any;
 };
+export type CheckSignFetchData = {
+  type: GroupActionTypes.CHECK_SIGN_FETCH_DATA;
+  payload: any;
+};
 export type GroupAction =
   | SetFetchGroupsDataAction
   | SetFetchGroupDataAction
   | AddFetchGroupDataAction
   | SignMemberFetchData
-  | UnsubcribeMemberFetchData;
+  | UnsubcribeMemberFetchData
+  | CheckSignFetchData;
 
 export type GroupState = {
   groups: any;

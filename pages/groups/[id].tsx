@@ -9,6 +9,7 @@ import styles from "./GroupPage.module.css";
 import Button from "@material-ui/core/Button";
 import GroupMembers from "../../components/GroupMembers";
 import {
+  checkSign,
   setGroup,
   signMember,
   unsubcribeMember,
@@ -37,21 +38,24 @@ const GroupPage = () => {
     dispatch(setGroupPosts(router.query.id));
   }, []);
 
-  const [isSign, setIsSign] = React.useState<boolean>(false);
   const nameMember = token ? jwt_decode(token).user : null;
   const userId = token ? jwt_decode(token).id : null;
+  const signed = useSelector<any>((state) => state.group.signed);
+  const payload = { groupId: router.query.id, userId };
+  React.useEffect(() => {
+    dispatch(checkSign(payload));
+  }, [signed]);
+
   const handleSigned = async () => {
     try {
       const payload = { nameMember, groupId: group?.group.id, userId };
       await dispatch(signMember(payload));
-      setIsSign(true);
     } catch (error) {}
   };
   const handleUnsubscribe = async () => {
     try {
       const payload = { groupId: group?.group.id, userId };
       await dispatch(unsubcribeMember(payload));
-      setIsSign(false);
     } catch (error) {}
   };
   return (
@@ -78,7 +82,7 @@ const GroupPage = () => {
             </Typography>
             <p>{group?.group.description}</p>
             <div>Сообщество было создано {group?.group.createdAt}</div>
-            {isSign ? (
+            {signed ? (
               <Button
                 variant='outlined'
                 onClick={handleUnsubscribe}
