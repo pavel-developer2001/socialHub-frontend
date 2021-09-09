@@ -17,7 +17,8 @@ import GroupCommentList from "../../../components/GroupCommentList";
 import { wrapper } from "../../../store";
 import { setGroupPost } from "../../../store/reducers/groupPostReducer";
 import { END } from "redux-saga";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setGroupComments } from "../../../store/reducers/groupCommentReducer";
 
 const GroupPost = () => {
   const router = useRouter();
@@ -32,6 +33,18 @@ const GroupPost = () => {
   };
   const groupPost = useSelector<any>((state) => state.groupPost.groupPost.data);
   const loading = useSelector<any>((state) => state.groupPost.loading);
+
+  const groupComments = useSelector<any>(
+    (state) => state.groupComment.groupComments.data
+  );
+  const loadingComments = useSelector<any>(
+    (state) => state.groupComment.loading
+  );
+  const groupPostId = router.query.id;
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(setGroupComments(groupPostId));
+  }, []);
   return (
     <MainLayout>
       {loading ? (
@@ -117,13 +130,20 @@ const GroupPost = () => {
                 className={styles.postFooterRatingCount}
                 color='text.secondary'
               >
-                999
+                {groupComments?.length}
               </Typography>
             </div>
             <div className={styles.postComments}>
               <>
-                <AddGroupComment />
-                <GroupCommentList />
+                <AddGroupComment
+                  groupPostId={groupPostId}
+                  groupId={groupPost?.groupId}
+                />
+                {loadingComments ? (
+                  <p>Loading</p>
+                ) : (
+                  <GroupCommentList comments={groupComments} />
+                )}
               </>
             </div>
           </div>

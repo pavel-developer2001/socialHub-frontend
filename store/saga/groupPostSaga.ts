@@ -1,5 +1,5 @@
 import { put, takeEvery, call } from "redux-saga/effects";
-import { GroupPostApi } from "../../apis/groupPost";
+import { GroupPostApi } from "../../apis/groupPostApi";
 import {
   addFetchGroupPostData,
   setFetchGroupPostData,

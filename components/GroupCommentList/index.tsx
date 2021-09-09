@@ -18,7 +18,13 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-const GroupCommentListItem = () => {
+const GroupCommentListItem: React.FC<any> = ({
+  userName,
+  text,
+  likes,
+  date,
+  id,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,7 +38,7 @@ const GroupCommentListItem = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-            R
+            U
           </Avatar>
         }
         action={
@@ -44,8 +50,8 @@ const GroupCommentListItem = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title='Title'
-        subheader='21.02.2121'
+        title={userName}
+        subheader={date}
       />
 
       <Menu
@@ -68,10 +74,7 @@ const GroupCommentListItem = () => {
 
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam,
-          assumenda similique atque amet minima in itaque cum temporibus
-          perferendis, quos quia, quod iusto labore dolores qui ex quis
-          consequatur odit!
+          {text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -79,19 +82,30 @@ const GroupCommentListItem = () => {
           <FavoriteIcon />
         </IconButton>
         <Typography variant='body2' color='text.secondary'>
-          99
+          {likes}
         </Typography>
       </CardActions>
     </Card>
   );
 };
-const GroupCommentList = () => {
+const GroupCommentList: React.FC<any> = ({ comments }) => {
   return (
     <div className={styles.commentList}>
       <Typography variant='h5'>Комментарии:</Typography>
-      <GroupCommentListItem />
-      <GroupCommentListItem />
-      <GroupCommentListItem />
+      {comments?.length > 0 ? (
+        comments.map((comment: any) => (
+          <GroupCommentListItem
+            key={comment?.id}
+            userName={comment?.author}
+            text={comment?.commentText}
+            likes={comment?.countCommentsLikes}
+            date={comment?.createdAt}
+            id={comment?.id}
+          />
+        ))
+      ) : (
+        <p>Нет комментариев!</p>
+      )}
     </div>
   );
 };

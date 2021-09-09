@@ -4,6 +4,7 @@ import { postWatcher } from "./postSaga";
 import { commentWatcher } from "./commentSaga";
 import { groupWatcher } from "./groupSaga";
 import { groupPostWatcher } from "./groupPostSaga";
+import { groupCommentWatcher } from "./groupCommentSaga";
 
 export function* rootWatcher() {
   yield all([
@@ -12,5 +13,6 @@ export function* rootWatcher() {
     commentWatcher(),
     groupWatcher(),
     groupPostWatcher(),
+    groupCommentWatcher(),
   ]);
 }
