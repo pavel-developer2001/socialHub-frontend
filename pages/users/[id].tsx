@@ -11,11 +11,16 @@ import { END } from "redux-saga";
 import { setUser } from "../../store/reducers/userReducer";
 import { useSelector } from "react-redux";
 import GroupsWithIHaveList from "../../components/GroupsWithIHaveList";
+import { token } from "../../utils/token";
+import jwt_decode from "jwt-decode";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 const Users = () => {
   const { user } = useSelector((state: any) => state.user);
   const { loading } = useSelector((state: any) => state.user);
   const data = user?.data?.user;
+  const userId = token ? jwt_decode(token).id : null;
   return (
     <MainLayout>
       <>
@@ -36,6 +41,15 @@ const Users = () => {
                 <Typography variant='h5' gutterBottom component='div'>
                   {data.name}
                 </Typography>
+                {data?.id === userId ? null : (
+                  <Button
+                    variant='contained'
+                    startIcon={<AddIcon />}
+                    color='primary'
+                  >
+                    Добавить в друзья
+                  </Button>
+                )}
               </Paper>{" "}
             </>
           )}

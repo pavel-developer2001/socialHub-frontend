@@ -13,6 +13,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
 import styles from "./GroupPostList.module.css";
+import { formatDate } from "../../utils/formatDate";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -38,7 +39,7 @@ const GroupPostListItem: React.FC<any> = ({
             </Avatar>
           }
           title={author}
-          subheader={date}
+          subheader={formatDate(new Date(date))}
         />
       </Link>
       {cover ? cover : null}

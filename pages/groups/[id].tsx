@@ -24,6 +24,7 @@ import { useRouter } from "next/dist/client/router";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { token } from "../../utils/token";
 import jwt_decode from "jwt-decode";
+import { formatDate } from "../../utils/formatDate";
 
 const GroupPage = () => {
   const group = useSelector<any>((state) => state.group.group.data);
@@ -81,7 +82,10 @@ const GroupPage = () => {
               {group?.group.titleGroup}
             </Typography>
             <p>{group?.group.description}</p>
-            <div>Сообщество было создано {group?.group.createdAt}</div>
+            <div>
+              Сообщество было создано {group?.group.createdAt}
+              {/* {formatDate(new Date(group?.group.createdAt))} */}
+            </div>
             {signed ? (
               <Button
                 variant='outlined'

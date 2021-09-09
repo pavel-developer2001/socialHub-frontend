@@ -17,6 +17,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { formatDate } from "../../utils/formatDate";
 
 const GroupCommentListItem: React.FC<any> = ({
   userName,
@@ -51,7 +52,7 @@ const GroupCommentListItem: React.FC<any> = ({
           </IconButton>
         }
         title={userName}
-        subheader={date}
+        subheader={formatDate(new Date(date))}
       />
 
       <Menu

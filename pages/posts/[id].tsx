@@ -22,6 +22,7 @@ import { setPost } from "../../store/reducers/postReducer";
 import { wrapper } from "../../store";
 import { END } from "redux-saga";
 import { useSelector } from "react-redux";
+import { formatDate } from "../../utils/formatDate";
 
 const Post = () => {
   const router = useRouter();
@@ -97,6 +98,7 @@ const Post = () => {
       <div className={styles.postFooter}>
         <div className={styles.postFooterDate}>
           <Typography variant='button' display='block' gutterBottom>
+            {/* {formatDate(new Date(postItem?.createdAt))} */}
             {postItem?.createdAt}
           </Typography>
         </div>

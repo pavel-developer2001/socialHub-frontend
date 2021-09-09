@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { removeCommentFetch } from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
 import { token } from "../../utils/token";
+import { formatDate } from "../../utils/formatDate";
 
 const CommentListItem: React.FC<any> = ({
   name,
@@ -65,7 +66,7 @@ const CommentListItem: React.FC<any> = ({
           </IconButton>
         }
         title={name}
-        subheader={date}
+        subheader={formatDate(new Date(date))}
       />
       {myId == userId ? (
         <Menu

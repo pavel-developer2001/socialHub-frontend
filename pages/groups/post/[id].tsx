@@ -19,6 +19,7 @@ import { setGroupPost } from "../../../store/reducers/groupPostReducer";
 import { END } from "redux-saga";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroupComments } from "../../../store/reducers/groupCommentReducer";
+import { formatDate } from "../../../utils/formatDate";
 
 const GroupPost = () => {
   const router = useRouter();
@@ -107,6 +108,7 @@ const GroupPost = () => {
           <div className={styles.postFooter}>
             <div className={styles.postFooterDate}>
               <Typography variant='button' display='block' gutterBottom>
+                {/* {formatDate(new Date(groupPost?.createdAt))} */}
                 {groupPost?.createdAt}
               </Typography>
             </div>

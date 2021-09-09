@@ -12,6 +12,7 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
+import { formatDate } from "../../utils/formatDate";
 
 type PostListItemProps = {
   userId: string;
@@ -42,7 +43,7 @@ const PostListItem: React.FC<PostListItemProps> = ({
             </Avatar>
           }
           title={name}
-          subheader={date}
+          subheader={formatDate(new Date(date))}
         />
       </Link>
       {imagePost ? (
