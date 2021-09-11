@@ -39,7 +39,15 @@ const Post = () => {
   if (loading) {
     return <p>Loading</p>;
   }
-
+  const [activeLike, setActiveLike] = React.useState(false);
+  const handleMunisLike = () => {
+    console.log(postItem?.countLikes - 1);
+    setActiveLike(false);
+  };
+  const handlePlusLike = () => {
+    console.log(postItem?.countLikes + 1);
+    setActiveLike(true);
+  };
   return (
     <MainLayout>
       <div className={styles.postHead}>
@@ -103,13 +111,19 @@ const Post = () => {
           </Typography>
         </div>
         <div className={styles.postFooterRating}>
-          <IconButton aria-label='add to favorites'>
+          <IconButton
+            aria-label='add to favorites'
+            className={activeLike ? styles.activeLike : null}
+            onClick={activeLike ? handleMunisLike : handlePlusLike}
+          >
             <FavoriteIcon />
           </IconButton>
           <Typography
             variant='body2'
-            className={styles.postFooterRatingCount}
             color='text.secondary'
+            className={
+              activeLike ? styles.activeLike : styles.postFooterRatingCount
+            }
           >
             {postItem?.countLikes}
           </Typography>

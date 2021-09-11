@@ -22,3 +22,9 @@
 .postFooterRatingCount {
   padding: 15px 0px;
 }
+
+.activeLike {
+  display: flex;
+  align-items: center;
+  color: red;
+}
