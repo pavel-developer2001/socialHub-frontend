@@ -18,6 +18,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { formatDate } from "../../utils/formatDate";
+import jwt_decode from "jwt-decode";
+import { token } from "../../utils/token";
+import { useDispatch } from "react-redux";
+import { removeGroupComment } from "../../store/reducers/groupCommentReducer";
 
 const GroupCommentListItem: React.FC<any> = ({
   userName,
@@ -25,6 +29,7 @@ const GroupCommentListItem: React.FC<any> = ({
   likes,
   date,
   id,
+  userId,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -33,6 +38,16 @@ const GroupCommentListItem: React.FC<any> = ({
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const myId = token ? jwt_decode(token).id : null;
+  const dispatch = useDispatch();
+  const handleRemoveGroupComment = async () => {
+    try {
+      setAnchorEl(null);
+      await dispatch(removeGroupComment(id));
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.commentListItem}>
@@ -43,13 +58,15 @@ const GroupCommentListItem: React.FC<any> = ({
           </Avatar>
         }
         action={
-          <IconButton
-            aria-label='settings'
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
+          myId == userId ? (
+            <IconButton
+              aria-label='settings'
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          ) : null
         }
         title={userName}
         subheader={formatDate(new Date(date))}
@@ -65,7 +82,7 @@ const GroupCommentListItem: React.FC<any> = ({
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem>
+        <MenuItem onClick={handleRemoveGroupComment}>
           <DeleteIcon /> Удалить
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -102,6 +119,7 @@ const GroupCommentList: React.FC<any> = ({ comments }) => {
             likes={comment?.countCommentsLikes}
             date={comment?.createdAt}
             id={comment?.id}
+            userId={comment?.userId}
           />
         ))
       ) : (

@@ -3,6 +3,8 @@ export enum GroupCommentActionTypes {
   SET_GROUP_COMMENTS = "SET_GROUP_COMMENTS ",
   ADD_FETCH_GROUP_COMMENT_DATA = "ADD_FETCH_GROUP_COMMENT_DATA",
   ADD_GROUP_COMMENT = "ADD_GROUP_COMMENT ",
+  REMOVE_FETCH_GROUP_COMMENT_DATA = "REMOVE_FETCH_GROUP_COMMENT_DATA",
+  REMOVE_GROUP_COMMENT = "REMOVE_GROUP_COMMENT ",
 }
 
 export type SetFetchGroupCommentsDataAction = {
@@ -13,9 +15,14 @@ export type AddFetchGroupCommentDataAction = {
   type: GroupCommentActionTypes.ADD_FETCH_GROUP_COMMENT_DATA;
   payload: any;
 };
+export type RemoveFetchGroupCommentDataAction = {
+  type: GroupCommentActionTypes.REMOVE_FETCH_GROUP_COMMENT_DATA;
+  payload: any;
+};
 export type GroupCommentCAction =
   | SetFetchGroupCommentsDataAction
-  | AddFetchGroupCommentDataAction;
+  | AddFetchGroupCommentDataAction
+  | RemoveFetchGroupCommentDataAction;
 
 export type GroupCommentState = {
   groupComments: any;

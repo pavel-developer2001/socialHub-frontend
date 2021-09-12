@@ -30,6 +30,8 @@ import { formatDate } from "../../utils/formatDate";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import { TextField } from "@material-ui/core";
+import { token } from "../../utils/token";
+import jwt_decode from "jwt-decode";
 
 const Post = () => {
   const router = useRouter();
@@ -56,7 +58,6 @@ const Post = () => {
     console.log(postItem?.countLikes + 1);
     setActiveLike(true);
   };
-
   const handleRemovePost = async () => {
     try {
       if (global.confirm("Вы действительно хотите удалить пост?")) {
@@ -77,6 +78,7 @@ const Post = () => {
       setAnchorEl(null);
     } catch (error) {}
   };
+  const myId = token ? jwt_decode(token).id : null;
   return (
     <MainLayout>
       <div className={styles.postHead}>
@@ -93,13 +95,15 @@ const Post = () => {
           </Typography>
         </div>
         <div className={styles.postHeadParams}>
-          <IconButton
-            aria-label='settings'
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
+          {postItem?.userId == myId ? (
+            <IconButton
+              aria-label='settings'
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          ) : null}
         </div>
         <Menu
           id='fade-menu'

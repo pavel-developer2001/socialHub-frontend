@@ -16,4 +16,12 @@ export const GroupCommentApi = {
       console.log(error);
     }
   },
+  async removeFetchGroupComment(id: number) {
+    try {
+      const data = await SocialHubApi.delete("/groups/comments/" + id);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
