@@ -89,10 +89,31 @@ const Post = () => {
           className={styles.postHeadUser}
           onClick={() => router.push(`/users/${postItem.userId}`)}
         >
-          <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
-          <Typography variant='h6' gutterBottom component='div'>
-            {postItem?.author}
-          </Typography>
+          <Avatar
+            className={styles.postAvatar}
+            sx={{ bgcolor: deepPurple[500] }}
+          >
+            U
+          </Avatar>
+          <div className={styles.head}>
+            <Typography
+              variant='h6'
+              className={styles.postAuthor}
+              gutterBottom
+              component='div'
+            >
+              {postItem?.author}
+            </Typography>
+            <Typography
+              variant='button'
+              display='block'
+              className={styles.postDate}
+              gutterBottom
+            >
+              {/* {formatDate(new Date(postItem?.createdAt))} */}
+              {postItem?.createdAt}
+            </Typography>
+          </div>
         </div>
         <div className={styles.postHeadParams}>
           {postItem?.userId == myId ? (
@@ -144,6 +165,26 @@ const Post = () => {
         </Menu>
       </div>
       <div className={styles.postBody}>
+        {!isEdit ? (
+          <Typography
+            variant='h6'
+            className={styles.text}
+            gutterBottom
+            component='p'
+          >
+            {postItem?.postText}
+          </Typography>
+        ) : (
+          <TextField
+            value={postText}
+            id='outlined-multiline-static'
+            label='Введите обновлённый текст'
+            className={styles.text}
+            rows={4}
+            variant='outlined'
+            onChange={(e) => setPostText(e.target.value)}
+          />
+        )}
         {postItem?.picturePost ? (
           <img
             className={styles.postImg}
@@ -151,59 +192,43 @@ const Post = () => {
             alt='img post'
           />
         ) : null}
-        {!isEdit ? (
-          <Typography variant='h6' gutterBottom component='p'>
-            {postItem?.postText}
-          </Typography>
-        ) : (
-          <TextField
-            value={postText}
-            id='outlined-multiline-static'
-            label='Multiline'
-            multiline
-            rows={4}
-            variant='outlined'
-            onChange={(e) => setPostText(e.target.value)}
-          />
-        )}
       </div>
       <div className={styles.postFooter}>
-        <div className={styles.postFooterDate}>
-          <Typography variant='button' display='block' gutterBottom>
-            {/* {formatDate(new Date(postItem?.createdAt))} */}
-            {postItem?.createdAt}
-          </Typography>
-        </div>
         <div className={styles.postFooterRating}>
-          <IconButton
-            aria-label='add to favorites'
-            className={activeLike ? styles.activeLike : null}
-            onClick={activeLike ? handleMunisLike : handlePlusLike}
-          >
-            <FavoriteIcon />
-          </IconButton>
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            className={
-              activeLike ? styles.activeLike : styles.postFooterRatingCount
-            }
-          >
-            {postItem?.countLikes}
-          </Typography>
+          <div className={styles.footerRating}>
+            <IconButton
+              aria-label='add to favorites'
+              className={activeLike ? styles.activeLike : null}
+              onClick={activeLike ? handleMunisLike : handlePlusLike}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            <Typography
+              variant='body2'
+              color='text.secondary'
+              className={
+                activeLike ? styles.activeLike : styles.postFooterRatingCount
+              }
+            >
+              {postItem?.countLikes}
+            </Typography>
+          </div>
 
-          <IconButton aria-label='add to favorites'>
-            <CommentIcon />
-          </IconButton>
-          <Typography
-            variant='body2'
-            className={styles.postFooterRatingCount}
-            color='text.secondary'
-          >
-            {post?.data?.commentsPost?.length}
-          </Typography>
+          <div className={styles.footerRating}>
+            <IconButton aria-label='add to favorites'>
+              <CommentIcon />
+            </IconButton>
+            <Typography
+              variant='body2'
+              className={styles.postFooterRatingCount}
+              color='text.secondary'
+            >
+              {post?.data?.commentsPost?.length}
+            </Typography>
+          </div>
         </div>
         <div className={styles.postComments}>
+          <Typography variant='h5'>Комментарии:</Typography>
           {loading ? (
             <p>Loading Comments</p>
           ) : (

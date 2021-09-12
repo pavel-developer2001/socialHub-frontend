@@ -1,4 +1,4 @@
-import { Button, Paper, TextField } from "@material-ui/core";
+import { Avatar, Button, Paper, TextField } from "@material-ui/core";
 import React from "react";
 import { token } from "../../utils/token";
 import jwt_decode from "jwt-decode";
@@ -21,26 +21,42 @@ const AddGroupPost: React.FC<any> = ({ groupPostAuthor, groupId }) => {
       };
       await dispatch(addGroupPost(payload));
       setGroupPostText("");
+      setBigForm(false);
     } catch (error) {}
   };
+  const [bigForm, setBigForm] = React.useState(false);
   return (
     <Paper elevation={3} className={styles.addPost}>
-      <TextField
-        id='outlined-multiline-static'
-        label='Что хотите написать в сообществе?'
-        multiline
-        rows={4}
-        value={groupPostText}
-        onChange={(e) => setGroupPostText(e.target.value)}
+      <Avatar
+        alt='Remy Sharp'
+        className={styles.avatar}
+        src='https://s1.zerochan.net/Yuuki.Makoto.%28PERSONA.3%29.600.2507109.jpg'
       />
-      <Button
-        variant='contained'
-        className={styles.addPost__btn}
-        disableElevation
-        onClick={handleAddGroupPost}
-      >
-        Добавить
-      </Button>
+      <div className={styles.content}>
+        <TextField
+          id='outlined-multiline-static'
+          label='Что хотите написать в сообществе?'
+          multiline
+          className={styles.form}
+          rows={bigForm ? 4 : 1}
+          onClick={() => setBigForm(true)}
+          value={groupPostText}
+          onChange={(e) => setGroupPostText(e.target.value)}
+        />
+        {bigForm ? (
+          <div className={styles.btn}>
+            {" "}
+            <Button
+              variant='contained'
+              className={styles.addPost__btn}
+              disableElevation
+              onClick={handleAddGroupPost}
+            >
+              Опубликовать
+            </Button>
+          </div>
+        ) : null}
+      </div>
     </Paper>
   );
 };

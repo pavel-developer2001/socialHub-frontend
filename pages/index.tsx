@@ -25,7 +25,6 @@ const Home = () => {
 
   return (
     <MainLayout>
-      лента
       <div>
         <AddPost />
       </div>

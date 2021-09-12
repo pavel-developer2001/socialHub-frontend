@@ -159,7 +159,6 @@ const CommentList: React.FC<any> = ({ comments, loading }) => {
   // console.log("COMMENTA", comments);
   return (
     <div className={styles.commentList}>
-      <Typography variant='h5'>Комментарии:</Typography>
       {loading ? (
         <p>Loading Comments</p>
       ) : comments?.length > 0 ? (

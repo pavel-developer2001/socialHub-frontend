@@ -157,7 +157,6 @@ const GroupCommentListItem: React.FC<any> = ({
 const GroupCommentList: React.FC<any> = ({ comments }) => {
   return (
     <div className={styles.commentList}>
-      <Typography variant='h5'>Комментарии:</Typography>
       {comments?.length > 0 ? (
         comments.map((comment: any) => (
           <GroupCommentListItem

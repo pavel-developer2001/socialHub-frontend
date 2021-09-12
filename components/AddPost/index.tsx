@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addPostFetch } from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
 import { token } from "../../utils/token";
+import { Avatar } from "@material-ui/core";
 
 const AddPost = () => {
   const [postText, setPostText] = React.useState("");
@@ -25,28 +26,43 @@ const AddPost = () => {
       };
       await dispatch(addPostFetch(payload));
       setPostText("");
+      setBigForm(false);
     } catch (error) {
       console.log(error);
     }
   };
+  const [bigForm, setBigForm] = React.useState(false);
   return (
     <Paper elevation={3} className={styles.addPost}>
-      <TextField
-        id='outlined-multiline-static'
-        label='С чем хотите поделиться?'
-        multiline
-        value={postText}
-        onChange={(e) => setPostText(e.target.value)}
-        rows={4}
+      <Avatar
+        alt='Remy Sharp'
+        className={styles.avatar}
+        src='https://s1.zerochan.net/Yuuki.Makoto.%28PERSONA.3%29.600.2507109.jpg'
       />
-      <Button
-        onClick={handleAddPost}
-        variant='contained'
-        className={styles.addPost__btn}
-        disableElevation
-      >
-        Добавить
-      </Button>
+      <div className={styles.content}>
+        <TextField
+          id='outlined-multiline-static'
+          className={styles.form}
+          label='С чем хотите поделиться?'
+          multiline
+          value={postText}
+          onClick={() => setBigForm(true)}
+          onChange={(e) => setPostText(e.target.value)}
+          rows={bigForm ? 4 : 1}
+        />
+        {bigForm ? (
+          <div className={styles.btn}>
+            <Button
+              onClick={handleAddPost}
+              variant='contained'
+              className={styles.addPost__btn}
+              disableElevation
+            >
+              Опубликовать
+            </Button>
+          </div>
+        ) : null}
+      </div>
     </Paper>
   );
 };

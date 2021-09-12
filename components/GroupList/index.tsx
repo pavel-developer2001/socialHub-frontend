@@ -19,20 +19,40 @@ const GroupListItem: React.FC<any> = ({
       {pictureGroup ? (
         pictureGroup
       ) : (
-        <Avatar sx={{ width: 56, height: 56, bgcolor: deepPurple[500] }}>
-          OP
+        <Avatar
+          className={styles.groupAvatar}
+          sx={{ width: 56, height: 56, bgcolor: deepPurple[500] }}
+        >
+          G
         </Avatar>
       )}
-
-      <Typography
-        className={styles.groupListItemTitle}
-        variant='h6'
-        gutterBottom
-        component='div'
-      >
-        {/* <Link href={`/groups/` + groupId}> </Link> */}
-        <p onClick={() => router.push(`/groups/` + groupId)}>{titleGroup}</p>
-      </Typography>
+      <div className={styles.data}>
+        <Typography
+          className={styles.groupListItemTitle}
+          variant='h6'
+          gutterBottom
+          component='div'
+        >
+          {/* <Link href={`/groups/` + groupId}> </Link> */}
+          <p onClick={() => router.push(`/groups/` + groupId)}>{titleGroup}</p>
+        </Typography>
+        <Typography
+          className={styles.groupType}
+          variant='h6'
+          gutterBottom
+          component='div'
+        >
+          Открытая группа
+        </Typography>
+        <Typography
+          className={styles.groupCountNumber}
+          variant='h6'
+          gutterBottom
+          component='div'
+        >
+          3 398 участников
+        </Typography>
+      </div>
     </Paper>
   );
 };

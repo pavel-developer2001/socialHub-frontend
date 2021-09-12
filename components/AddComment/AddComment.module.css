@@ -1,6 +1,10 @@
 .addCommentArea {
   width: 35%;
+  margin: 10px 0px;
+  margin: 0px 10px;
 }
-.addCommentBtn {
-  margin: 40px 5px 3px 10px;
+.addComment {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
 }

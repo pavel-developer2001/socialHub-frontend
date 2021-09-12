@@ -38,7 +38,11 @@ const PostListItem: React.FC<PostListItemProps> = ({
       <Link href={`/users/${userId}`}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+            <Avatar
+              className={styles.avatar}
+              sx={{ bgcolor: red[500] }}
+              aria-label='recipe'
+            >
               R
             </Avatar>
           }
@@ -46,6 +50,18 @@ const PostListItem: React.FC<PostListItemProps> = ({
           subheader={formatDate(new Date(date))}
         />
       </Link>
+
+      <CardContent>
+        {" "}
+        <Typography
+          variant='body2'
+          onClick={() => router.push(`/posts/${postId}`)}
+          color='text.secondary'
+          className={styles.text}
+        >
+          {text}
+        </Typography>
+      </CardContent>
       {imagePost ? (
         <CardMedia
           sx={{
@@ -54,24 +70,18 @@ const PostListItem: React.FC<PostListItemProps> = ({
           }}
           image={imagePost}
           title='Paella dish'
+          className={styles.img}
         />
       ) : null}
-
-      <CardContent>
-        {" "}
-        <Typography
-          variant='body2'
-          onClick={() => router.push(`/posts/${postId}`)}
-          color='text.secondary'
-        >
-          {text}
-        </Typography>
-      </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
           <FavoriteIcon />
         </IconButton>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography
+          variant='body2'
+          className={styles.like}
+          color='text.secondary'
+        >
           {likes}
         </Typography>
       </CardActions>

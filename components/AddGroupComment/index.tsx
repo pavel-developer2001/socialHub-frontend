@@ -1,4 +1,4 @@
-import { Button, TextField } from "@material-ui/core";
+import { Avatar, Button, IconButton, TextField } from "@material-ui/core";
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { token } from "../../utils/token";
@@ -22,6 +22,11 @@ const AddGroupComment: React.FC<any> = ({ groupPostId, groupId }) => {
   };
   return (
     <div className={styles.addComment}>
+      <Avatar
+        alt='Remy Sharp'
+        className={styles.avatar}
+        src='http://pm1.narvii.com/7587/db8e5b7dac75cf90b8acec4737fb01c5a273a0f8r1-1280-1707v2_uhq.jpg'
+      />
       <TextField
         id='outlined-multiline-static'
         label='Оставить комментарий'
@@ -29,16 +34,16 @@ const AddGroupComment: React.FC<any> = ({ groupPostId, groupId }) => {
         multiline
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
-        rows={2}
       />
-      <Button
-        variant='contained'
-        onClick={handleAddNewComment}
-        className={styles.addCommentBtn}
-        startIcon={<AddIcon />}
-      >
-        Добавить
-      </Button>
+      {commentText ? (
+        <IconButton
+          aria-label='add'
+          onClick={handleAddNewComment}
+          className={styles.addCommentBtn}
+        >
+          <AddIcon />
+        </IconButton>
+      ) : null}
     </div>
   );
 };

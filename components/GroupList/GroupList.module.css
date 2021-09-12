@@ -1,13 +1,36 @@
 .groupList {
   margin: 20px 0px;
+  min-width: 450px;
 }
 .groupListItem {
   display: flex;
+  min-width: 450px;
   align-items: center;
-  padding: 5px 10px;
-  margin: 15px 0px;
+  margin: 10px 0px;
   width: fit-content;
+  padding: 15px 10px;
 }
 .groupListItemTitle {
-  margin: 0px 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2a5885;
+}
+.groupListItemTitle:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.groupAvatar {
+  width: 80px;
+  height: 80px;
+}
+.data {
+  margin-left: 12px;
+}
+.groupType {
+  font-size: 14px;
+  color: #626d7a;
+}
+.groupCountNumber {
+  font-size: 13px;
+  color: #626d7a;
 }

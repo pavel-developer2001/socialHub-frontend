@@ -34,7 +34,11 @@ const GroupPostListItem: React.FC<any> = ({
       <Link href={`/groups/` + groupId}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
+            <Avatar
+              sx={{ bgcolor: red[500] }}
+              className={styles.avatar}
+              aria-label='recipe'
+            >
               G
             </Avatar>
           }
@@ -42,7 +46,6 @@ const GroupPostListItem: React.FC<any> = ({
           subheader={formatDate(new Date(date))}
         />
       </Link>
-      {cover ? cover : null}
 
       <CardContent>
         {" "}
@@ -50,15 +53,31 @@ const GroupPostListItem: React.FC<any> = ({
           variant='body2'
           onClick={() => router.push(`/groups/post/` + id)}
           color='text.secondary'
+          className={styles.text}
         >
           {text}
         </Typography>
       </CardContent>
+      {cover ? (
+        <CardMedia
+          sx={{
+            height: 0,
+            paddingTop: "56.25%", // 16:9
+          }}
+          image={cover}
+          title='Paella dish'
+          className={styles.img}
+        />
+      ) : null}
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
           <FavoriteIcon />
         </IconButton>
-        <Typography variant='body2' color='text.secondary'>
+        <Typography
+          variant='body2'
+          className={styles.like}
+          color='text.secondary'
+        >
           {likes}
         </Typography>
       </CardActions>

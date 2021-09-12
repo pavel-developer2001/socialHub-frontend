@@ -6,6 +6,7 @@
 .postHeadUser {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 0px 25px;
 }
 .postBody {
@@ -18,13 +19,52 @@
 }
 .postFooterRating {
   display: flex;
+  margin: 0px 63px;
 }
 .postFooterRatingCount {
-  padding: 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px -8px;
+  font-size: 14px;
 }
-
 .activeLike {
   display: flex;
   align-items: center;
   color: red;
+}
+.postAvatar {
+  height: 50px;
+  width: 50px;
+}
+.head {
+  margin-left: 16px;
+}
+.postAuthor {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2a5885;
+}
+.postAuthor:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.postDate {
+  font-size: 13px;
+  color: #626d7a;
+  margin-top: -9px;
+}
+.text {
+  font-size: 16px;
+  color: black;
+  margin: 8px 77px;
+}
+.footerRating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.postComments {
+  margin: 8px 77px;
 }

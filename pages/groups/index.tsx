@@ -12,7 +12,6 @@ const Groups = () => {
   const loading = useSelector<any>((state) => state.group.loading);
   return (
     <MainLayout>
-      Сообщества
       <CreateGroup />
       {loading ? <p>Loading</p> : <GroupList groups={groups} />}
     </MainLayout>

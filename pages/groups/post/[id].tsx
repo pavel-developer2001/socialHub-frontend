@@ -102,11 +102,32 @@ const GroupPost = () => {
               {groupPost?.groupPostPicture ? (
                 groupPost?.groupPostPicture
               ) : (
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>G</Avatar>
+                <Avatar
+                  className={styles.postAvatar}
+                  sx={{ bgcolor: deepPurple[500] }}
+                >
+                  G
+                </Avatar>
               )}
-              <Typography variant='h6' gutterBottom component='div'>
-                {groupPost?.groupPostAuthor}
-              </Typography>
+              <div className={styles.head}>
+                <Typography
+                  variant='h6'
+                  className={styles.postAuthor}
+                  gutterBottom
+                  component='div'
+                >
+                  {groupPost?.groupPostAuthor}
+                </Typography>
+                <Typography
+                  variant='button'
+                  className={styles.postDate}
+                  display='block'
+                  gutterBottom
+                >
+                  {/* {formatDate(new Date(groupPost?.createdAt))} */}
+                  {groupPost?.createdAt}
+                </Typography>
+              </div>
             </div>
             <div className={styles.postHeadParams}>
               <IconButton
@@ -159,15 +180,20 @@ const GroupPost = () => {
             {groupPost?.groupPostPicture ? groupPost?.groupPostPicture : null}
 
             {!isEdit ? (
-              <Typography variant='h6' gutterBottom component='p'>
+              <Typography
+                variant='h6'
+                className={styles.text}
+                gutterBottom
+                component='p'
+              >
                 {groupPost?.groupPostText}
               </Typography>
             ) : (
               <TextField
                 value={groupPostText}
                 id='outlined-multiline-static'
-                label='Multiline'
-                multiline
+                label='Введите обновлённый текст'
+                className={styles.text}
                 rows={4}
                 variant='outlined'
                 onChange={(e) => setGroupPostText(e.target.value)}
@@ -175,36 +201,34 @@ const GroupPost = () => {
             )}
           </div>
           <div className={styles.postFooter}>
-            <div className={styles.postFooterDate}>
-              <Typography variant='button' display='block' gutterBottom>
-                {/* {formatDate(new Date(groupPost?.createdAt))} */}
-                {groupPost?.createdAt}
-              </Typography>
-            </div>
             <div className={styles.postFooterRating}>
-              <IconButton aria-label='add to favorites'>
-                <FavoriteIcon />
-              </IconButton>
-              <Typography
-                variant='body2'
-                className={styles.postFooterRatingCount}
-                color='text.secondary'
-              >
-                {groupPost?.groupPostCountLikes}
-              </Typography>
-
-              <IconButton aria-label='add to favorites'>
-                <CommentIcon />
-              </IconButton>
-              <Typography
-                variant='body2'
-                className={styles.postFooterRatingCount}
-                color='text.secondary'
-              >
-                {groupComments?.length}
-              </Typography>
+              <div className={styles.footerRating}>
+                <IconButton aria-label='add to favorites'>
+                  <FavoriteIcon />
+                </IconButton>
+                <Typography
+                  variant='body2'
+                  className={styles.postFooterRatingCount}
+                  color='text.secondary'
+                >
+                  {groupPost?.groupPostCountLikes}
+                </Typography>
+              </div>
+              <div className={styles.footerRating}>
+                <IconButton aria-label='add to favorites'>
+                  <CommentIcon />
+                </IconButton>
+                <Typography
+                  variant='body2'
+                  className={styles.postFooterRatingCount}
+                  color='text.secondary'
+                >
+                  {groupComments?.length}
+                </Typography>
+              </div>
             </div>
             <div className={styles.postComments}>
+              <Typography variant='h5'>Комментарии:</Typography>
               <>
                 <AddGroupComment
                   groupPostId={groupPostId}

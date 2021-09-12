@@ -1,9 +1,30 @@
 .addPost {
   margin: 25px 0px;
   padding: 5px 10px;
-  display: inline-grid;
-  min-width: 360px;
+  display: flex;
+  min-width: 450px;
+  width: fit-content;
+  padding: 16px 42px 16px 12px;
 }
 .addPost__btn {
   margin-top: 15px;
+  display: block;
+  margin-left: 56%;
+}
+.addPost__btn > button > span {
+  font-size: 14px;
+}
+.content {
+  min-width: 100% !important;
+}
+.form {
+  margin-left: 12px;
+  border: none !important;
+  min-width: 90% !important;
+}
+.form label {
+  font-size: 14px;
+}
+.form > .css-104ot2m-MuiInputBase-root-MuiOutlinedInput-root > fieldset {
+  border: none !important;
 }

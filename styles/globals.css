@@ -17,3 +17,19 @@ a {
   padding: 0;
   margin: 0;
 }
+.css-46bh2p-MuiCardContent-root {
+  padding: 0 16px;
+}
+.css-et1ao3-MuiTypography-root {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2a5885;
+}
+.css-et1ao3-MuiTypography-root:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.css-83ijpv-MuiTypography-root {
+  font-size: 13px;
+  color: #626d7a;
+}
