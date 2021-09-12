@@ -18,14 +18,22 @@ import { deepPurple } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
 import AddComment from "../../components/AddComment";
 import CommentList from "../../components/CommentList";
-import { setPost } from "../../store/reducers/postReducer";
+import {
+  editPost,
+  removePost,
+  setPost,
+} from "../../store/reducers/postReducer";
 import { wrapper } from "../../store";
 import { END } from "redux-saga";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatDate } from "../../utils/formatDate";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
+import { TextField } from "@material-ui/core";
 
 const Post = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { loading, post } = useSelector((state: any) => state.post);
   const postItem = post?.data?.post;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -47,6 +55,27 @@ const Post = () => {
   const handlePlusLike = () => {
     console.log(postItem?.countLikes + 1);
     setActiveLike(true);
+  };
+
+  const handleRemovePost = async () => {
+    try {
+      if (global.confirm("Вы действительно хотите удалить пост?")) {
+        await dispatch(removePost(router.query.id));
+        router.push("/");
+        setAnchorEl(null);
+      }
+      setAnchorEl(null);
+    } catch (error) {}
+  };
+  const [postText, setPostText] = React.useState(postItem?.postText);
+  const [isEdit, setIsEdit] = React.useState(false);
+  const handleEditPost = async () => {
+    try {
+      const payload = { postId: router.query.id, postText };
+      await dispatch(editPost(payload));
+      setIsEdit(false);
+      setAnchorEl(null);
+    } catch (error) {}
   };
   return (
     <MainLayout>
@@ -82,12 +111,32 @@ const Post = () => {
           onClose={handleClose}
           TransitionComponent={Fade}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleRemovePost}>
             <DeleteIcon /> Удалить
           </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <EditIcon /> Редактировать
-          </MenuItem>
+          {!isEdit ? (
+            <MenuItem onClick={() => setIsEdit(true)}>
+              <EditIcon /> Редактировать
+            </MenuItem>
+          ) : (
+            <Menu
+              id='fade-menu'
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleEditPost}>
+                <CheckIcon /> Обновить пост
+              </MenuItem>
+              <MenuItem onClick={() => setIsEdit(false)}>
+                <CloseIcon /> Отмена
+              </MenuItem>
+            </Menu>
+          )}
         </Menu>
       </div>
       <div className={styles.postBody}>
@@ -98,10 +147,21 @@ const Post = () => {
             alt='img post'
           />
         ) : null}
-
-        <Typography variant='h6' gutterBottom component='p'>
-          {postItem?.postText}
-        </Typography>
+        {!isEdit ? (
+          <Typography variant='h6' gutterBottom component='p'>
+            {postItem?.postText}
+          </Typography>
+        ) : (
+          <TextField
+            value={postText}
+            id='outlined-multiline-static'
+            label='Multiline'
+            multiline
+            rows={4}
+            variant='outlined'
+            onChange={(e) => setPostText(e.target.value)}
+          />
+        )}
       </div>
       <div className={styles.postFooter}>
         <div className={styles.postFooterDate}>

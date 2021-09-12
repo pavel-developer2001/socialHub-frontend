@@ -37,7 +37,12 @@ export const postReducer = produce(
           (item) => item.id != action.payload.data.commentId
         );
         break;
-
+      case PostActionTypes.REMOVE_POST_FETCH_DATA:
+        draft.posts.data = draft.posts.data.filter(
+          (item) => item.id != action.payload.data.id
+        );
+      case PostActionTypes.EDIT_POST_FETCH_DATA:
+        draft.post.data.post = action.payload.data;
       default:
         break;
     }
@@ -82,5 +87,21 @@ export const removeComment = (payload: any) => ({
 });
 export const removeCommentFetch = (payload: any) => ({
   type: PostActionTypes.REMOVE_COMMENT_FETCH,
+  payload,
+});
+export const removePostFetchData = (payload: any) => ({
+  type: PostActionTypes.REMOVE_POST_FETCH_DATA,
+  payload,
+});
+export const removePost = (payload: any) => ({
+  type: PostActionTypes.REMOVE_POST,
+  payload,
+});
+export const editPostFetchData = (payload: any) => ({
+  type: PostActionTypes.EDIT_POST_FETCH_DATA,
+  payload,
+});
+export const editPost = (payload: any) => ({
+  type: PostActionTypes.EDIT_POST,
   payload,
 });
