@@ -13,6 +13,8 @@ export enum PostActionTypes {
   REMOVE_POST = "REMOVE_POST",
   EDIT_POST_FETCH_DATA = "EDIT_POST_FETCH_DATA",
   EDIT_POST = "EDIT_POST",
+  EDIT_COMMENT_FETCH_DATA = "EDIT_COMMENT_FETCH_DATA",
+  EDIT_COMMENT = "EDIT_COMMENT",
 }
 
 export type IPost = {
@@ -78,6 +80,10 @@ export type EditPostFetchDataAction = {
   type: PostActionTypes.EDIT_POST_FETCH_DATA;
   payload: any;
 };
+export type EditCommentFetchDataAction = {
+  type: PostActionTypes.EDIT_COMMENT_FETCH_DATA;
+  payload: any;
+};
 export type PostAction =
   | SetFetchPostsDataAction
   | AddPostAction
@@ -85,4 +91,5 @@ export type PostAction =
   | AddCommentAction
   | RemoveCommentAction
   | RemovePostFetchDataAction
-  | EditPostFetchDataAction;
+  | EditPostFetchDataAction
+  | EditCommentFetchDataAction;

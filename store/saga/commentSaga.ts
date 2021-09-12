@@ -1,5 +1,9 @@
 import { put, takeEvery, call } from "redux-saga/effects";
-import { addComment, removeComment } from "../reducers/postReducer";
+import {
+  addComment,
+  editCommentFetchData,
+  removeComment,
+} from "../reducers/postReducer";
 import { PostActionTypes } from "../types/post";
 import { CommentsApi } from "../../apis/commentsApi";
 
@@ -26,8 +30,20 @@ function* removeCommentWorker({ payload: id }: any) {
     console.log(error);
   }
 }
+function* editCommentWorker({ payload: payload }: any) {
+  try {
+    const editComment: Promise<any> = yield call(
+      CommentsApi.editFetchComment,
+      payload
+    );
+    yield put(editCommentFetchData(editComment));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export function* commentWatcher() {
   yield takeEvery(PostActionTypes.ADD_COMMENT_FETCH, addCommentWorker);
   yield takeEvery(PostActionTypes.REMOVE_COMMENT_FETCH, removeCommentWorker);
+  yield takeEvery(PostActionTypes.EDIT_COMMENT, editCommentWorker);
 }

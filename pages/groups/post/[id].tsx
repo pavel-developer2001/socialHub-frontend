@@ -1,4 +1,11 @@
-import { Avatar, Fade, Menu, MenuItem, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Fade,
+  Menu,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { deepPurple } from "@material-ui/core/colors";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
@@ -15,11 +22,17 @@ import styles from "./Post.module.css";
 import AddGroupComment from "../../../components/AddGroupComment";
 import GroupCommentList from "../../../components/GroupCommentList";
 import { wrapper } from "../../../store";
-import { setGroupPost } from "../../../store/reducers/groupPostReducer";
+import {
+  editGroupPost,
+  removeGroupPost,
+  setGroupPost,
+} from "../../../store/reducers/groupPostReducer";
 import { END } from "redux-saga";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroupComments } from "../../../store/reducers/groupCommentReducer";
 import { formatDate } from "../../../utils/formatDate";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
 
 const GroupPost = () => {
   const router = useRouter();
@@ -46,6 +59,29 @@ const GroupPost = () => {
   React.useEffect(() => {
     dispatch(setGroupComments(groupPostId));
   }, []);
+
+  const handleRemoveGroupPost = async () => {
+    try {
+      if (global.confirm("Вы действительно хотите удалить пост сообщества?")) {
+        await dispatch(removeGroupPost(groupPostId));
+        router.push("/groups/" + groupPost?.groupId);
+        setAnchorEl(null);
+      }
+      setAnchorEl(null);
+    } catch (error) {}
+  };
+  const [groupPostText, setGroupPostText] = React.useState(
+    groupPost?.groupPostText
+  );
+  const [isEdit, setIsEdit] = React.useState(false);
+  const handleEditGroupPost = async () => {
+    try {
+      const payload = { groupPostId, groupPostText };
+      await dispatch(editGroupPost(payload));
+      setIsEdit(false);
+      setAnchorEl(null);
+    } catch (error) {}
+  };
   return (
     <MainLayout>
       {loading ? (
@@ -91,19 +127,52 @@ const GroupPost = () => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleRemoveGroupPost}>
                 <DeleteIcon /> Удалить
               </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <EditIcon /> Редактировать
-              </MenuItem>
+              {!isEdit ? (
+                <MenuItem onClick={() => setIsEdit(true)}>
+                  <EditIcon /> Редактировать
+                </MenuItem>
+              ) : (
+                <Menu
+                  id='fade-menu'
+                  MenuListProps={{
+                    "aria-labelledby": "fade-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem onClick={handleEditGroupPost}>
+                    <CheckIcon /> Обновить пост
+                  </MenuItem>
+                  <MenuItem onClick={() => setIsEdit(false)}>
+                    <CloseIcon /> Отмена
+                  </MenuItem>
+                </Menu>
+              )}
             </Menu>
           </div>
           <div className={styles.postBody}>
             {groupPost?.groupPostPicture ? groupPost?.groupPostPicture : null}
-            <Typography variant='h6' gutterBottom component='p'>
-              {groupPost?.groupPostText}
-            </Typography>
+
+            {!isEdit ? (
+              <Typography variant='h6' gutterBottom component='p'>
+                {groupPost?.groupPostText}
+              </Typography>
+            ) : (
+              <TextField
+                value={groupPostText}
+                id='outlined-multiline-static'
+                label='Multiline'
+                multiline
+                rows={4}
+                variant='outlined'
+                onChange={(e) => setGroupPostText(e.target.value)}
+              />
+            )}
           </div>
           <div className={styles.postFooter}>
             <div className={styles.postFooterDate}>

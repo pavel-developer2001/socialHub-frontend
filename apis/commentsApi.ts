@@ -16,4 +16,12 @@ export const CommentsApi = {
       console.log(error);
     }
   },
+  async editFetchComment(payload: object) {
+    try {
+      const data = await SocialHubApi.put("/comments/edit", payload);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

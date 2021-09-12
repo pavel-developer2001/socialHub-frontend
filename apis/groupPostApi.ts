@@ -24,4 +24,20 @@ export const GroupPostApi = {
       console.log(error);
     }
   },
+  async removeFetchGroupPost(id: number) {
+    try {
+      const data = await SocialHubApi.delete("/groups/posts/" + id);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async editFetchGroupPost(payload: object) {
+    try {
+      const data = await SocialHubApi.put("/groups/posts/edit", payload);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

@@ -17,10 +17,16 @@ import Fade from "@material-ui/core/Fade";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useDispatch } from "react-redux";
-import { removeCommentFetch } from "../../store/reducers/postReducer";
+import {
+  editComment,
+  removeCommentFetch,
+} from "../../store/reducers/postReducer";
 import jwt_decode from "jwt-decode";
 import { token } from "../../utils/token";
 import { formatDate } from "../../utils/formatDate";
+import TextField from "@material-ui/core/TextField";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
 
 const CommentListItem: React.FC<any> = ({
   name,
@@ -47,6 +53,16 @@ const CommentListItem: React.FC<any> = ({
     } catch (error) {
       console.log(error);
     }
+  };
+  const [isEdit, setIsEdit] = React.useState(false);
+  const [commentText, setCommentText] = React.useState(text);
+  const handleEditComment = async () => {
+    const payload = { commentId, commentText };
+    await dispatch(editComment(payload));
+    setIsEdit(false);
+    setAnchorEl(null);
+    try {
+    } catch (error) {}
   };
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.commentListItem}>
@@ -82,15 +98,50 @@ const CommentListItem: React.FC<any> = ({
           <MenuItem onClick={handleRemoveComment}>
             <DeleteIcon /> Удалить
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          {!isEdit ? (
+            <MenuItem onClick={() => setIsEdit(true)}>
+              <EditIcon /> Редактировать
+            </MenuItem>
+          ) : (
+            <Menu
+              id='fade-menu'
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <MenuItem onClick={handleEditComment}>
+                <CheckIcon /> Обновить комментарий
+              </MenuItem>
+              <MenuItem onClick={() => setIsEdit(false)}>
+                <CloseIcon /> Отмена
+              </MenuItem>
+            </Menu>
+          )}
+          {/* <MenuItem onClick={handleClose}>
             <EditIcon /> Редактировать
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       ) : null}
       <CardContent>
-        <Typography variant='body2' color='text.secondary'>
-          {text}
-        </Typography>
+        {!isEdit ? (
+          <Typography variant='body2' color='text.secondary'>
+            {text}
+          </Typography>
+        ) : (
+          <TextField
+            value={commentText}
+            id='outlined-multiline-static'
+            label='Multiline'
+            multiline
+            rows={4}
+            variant='outlined'
+            onChange={(e: any) => setCommentText(e.target.value)}
+          />
+        )}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>

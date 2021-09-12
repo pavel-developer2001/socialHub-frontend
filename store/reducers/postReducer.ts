@@ -43,6 +43,11 @@ export const postReducer = produce(
         );
       case PostActionTypes.EDIT_POST_FETCH_DATA:
         draft.post.data.post = action.payload.data;
+      case PostActionTypes.EDIT_COMMENT_FETCH_DATA:
+        draft.post.data.commentsPost = draft.post.data.commentsPost.filter(
+          (item) => item.id != action.payload.data.id
+        );
+        draft.post.data.commentsPost.push(action.payload.data);
       default:
         break;
     }
@@ -103,5 +108,13 @@ export const editPostFetchData = (payload: any) => ({
 });
 export const editPost = (payload: any) => ({
   type: PostActionTypes.EDIT_POST,
+  payload,
+});
+export const editCommentFetchData = (payload: any) => ({
+  type: PostActionTypes.EDIT_COMMENT_FETCH_DATA,
+  payload,
+});
+export const editComment = (payload: any) => ({
+  type: PostActionTypes.EDIT_COMMENT,
   payload,
 });

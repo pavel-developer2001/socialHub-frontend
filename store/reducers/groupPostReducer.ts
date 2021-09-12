@@ -29,6 +29,12 @@ export const groupPostReducer = produce(
       case GroupPostActionTypes.ADD_FETCH_GROUP_POST_DATA:
         draft.groupPosts.data.push(action.payload.data);
         break;
+      case GroupPostActionTypes.REMOVE_FETCH_GROUP_POST_DATA:
+        draft.groupPosts = draft.groupPosts.data.filter(
+          (item: any) => item.id != action.payload.data.id
+        );
+      case GroupPostActionTypes.EDIT_FETCH_GROUP_POST_DATA:
+        draft.groupPost.data = action.payload.data;
       default:
         break;
     }
@@ -58,5 +64,21 @@ export const addFetchGroupPostData = (payload: any) => ({
 });
 export const addGroupPost = (payload: any) => ({
   type: GroupPostActionTypes.ADD_GROUP_POST,
+  payload,
+});
+export const removeFetchGroupPostData = (payload: any) => ({
+  type: GroupPostActionTypes.REMOVE_FETCH_GROUP_POST_DATA,
+  payload,
+});
+export const removeGroupPost = (payload: any) => ({
+  type: GroupPostActionTypes.REMOVE_GROUP_POST,
+  payload,
+});
+export const editFetchGroupPostData = (payload: any) => ({
+  type: GroupPostActionTypes.EDIT_FETCH_GROUP_POST_DATA,
+  payload,
+});
+export const editGroupPost = (payload: any) => ({
+  type: GroupPostActionTypes.EDIT_GROUP_POST,
   payload,
 });
