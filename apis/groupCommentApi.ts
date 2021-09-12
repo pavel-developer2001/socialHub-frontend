@@ -24,4 +24,12 @@ export const GroupCommentApi = {
       console.log(error);
     }
   },
+  async editFetchGroupComment(payload: object) {
+    try {
+      const data = await SocialHubApi.put("/groups/comments/edit", payload);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

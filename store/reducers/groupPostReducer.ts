@@ -33,8 +33,10 @@ export const groupPostReducer = produce(
         draft.groupPosts = draft.groupPosts.data.filter(
           (item: any) => item.id != action.payload.data.id
         );
+        break;
       case GroupPostActionTypes.EDIT_FETCH_GROUP_POST_DATA:
         draft.groupPost.data = action.payload.data;
+        break;
       default:
         break;
     }

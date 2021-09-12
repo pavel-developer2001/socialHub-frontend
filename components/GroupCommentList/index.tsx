@@ -8,6 +8,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
@@ -21,7 +22,12 @@ import { formatDate } from "../../utils/formatDate";
 import jwt_decode from "jwt-decode";
 import { token } from "../../utils/token";
 import { useDispatch } from "react-redux";
-import { removeGroupComment } from "../../store/reducers/groupCommentReducer";
+import {
+  editGroupComment,
+  removeGroupComment,
+} from "../../store/reducers/groupCommentReducer";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
 
 const GroupCommentListItem: React.FC<any> = ({
   userName,
@@ -48,6 +54,16 @@ const GroupCommentListItem: React.FC<any> = ({
     } catch (error) {
       console.log(error);
     }
+  };
+  const [commentText, setCommentText] = React.useState(text);
+  const [isEdit, setIsEdit] = React.useState(false);
+  const handleEditGroupComment = async () => {
+    try {
+      const payload = { groupCommentId: id, commentText };
+      await dispatch(editGroupComment(payload));
+      setIsEdit(false);
+      setAnchorEl(null);
+    } catch (error) {}
   };
   return (
     <Card sx={{ maxWidth: 345 }} className={styles.commentListItem}>
@@ -85,15 +101,47 @@ const GroupCommentListItem: React.FC<any> = ({
         <MenuItem onClick={handleRemoveGroupComment}>
           <DeleteIcon /> Удалить
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <EditIcon /> Редактировать
-        </MenuItem>
+        {!isEdit ? (
+          <MenuItem onClick={() => setIsEdit(true)}>
+            <EditIcon /> Редактировать
+          </MenuItem>
+        ) : (
+          <Menu
+            id='fade-menu'
+            MenuListProps={{
+              "aria-labelledby": "fade-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+          >
+            <MenuItem onClick={handleEditGroupComment}>
+              <CheckIcon /> Обновить пост
+            </MenuItem>
+            <MenuItem onClick={() => setIsEdit(false)}>
+              <CloseIcon /> Отмена
+            </MenuItem>
+          </Menu>
+        )}
       </Menu>
 
       <CardContent>
-        <Typography variant='body2' color='text.secondary'>
-          {text}
-        </Typography>
+        {!isEdit ? (
+          <Typography variant='body2' color='text.secondary'>
+            {text}
+          </Typography>
+        ) : (
+          <TextField
+            value={commentText}
+            id='outlined-multiline-static'
+            label='Multiline'
+            multiline
+            rows={4}
+            variant='outlined'
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+        )}
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>

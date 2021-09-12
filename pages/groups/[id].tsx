@@ -10,6 +10,8 @@ import Button from "@material-ui/core/Button";
 import GroupMembers from "../../components/GroupMembers";
 import {
   checkSign,
+  editGroup,
+  removeGroup,
   setGroup,
   signMember,
   unsubcribeMember,
@@ -24,7 +26,15 @@ import { useRouter } from "next/dist/client/router";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { token } from "../../utils/token";
 import jwt_decode from "jwt-decode";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { formatDate } from "../../utils/formatDate";
+import { IconButton, TextField } from "@material-ui/core";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
 
 const GroupPage = () => {
   const group = useSelector<any>((state) => state.group.group.data);
@@ -59,6 +69,38 @@ const GroupPage = () => {
       await dispatch(unsubcribeMember(payload));
     } catch (error) {}
   };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleRemoveGroup = async () => {
+    try {
+      if (global.confirm("Вы действительно хотите удалить сообщество?")) {
+        await dispatch(removeGroup(group?.group.id));
+        router.push("/");
+        setAnchorEl(null);
+      }
+      setAnchorEl(null);
+    } catch (error) {}
+  };
+  const [titleGroup, setTitleGroup] = React.useState(group?.group.titleGroup);
+  const [description, setDescription] = React.useState(
+    group?.group.description
+  );
+  const [isEdit, setIsEdit] = React.useState(false);
+  const handleEditGroup = async () => {
+    try {
+      const payload = { groupId: group?.group.id, titleGroup, description };
+      await dispatch(editGroup(payload));
+      setIsEdit(false);
+      setAnchorEl(null);
+    } catch (error) {}
+  };
   return (
     <MainLayout>
       {loading ? (
@@ -77,15 +119,88 @@ const GroupPage = () => {
                 OP
               </Avatar>
             )}
+            {!isEdit ? (
+              <>
+                <Typography
+                  className=''
+                  variant='h6'
+                  gutterBottom
+                  component='div'
+                >
+                  {group?.group.titleGroup}
+                </Typography>
+                <p>{group?.group.description}</p>
+              </>
+            ) : (
+              <>
+                <TextField
+                  value={titleGroup}
+                  id='outlined-multiline-static'
+                  label='Multiline'
+                  multiline
+                  rows={4}
+                  variant='outlined'
+                  onChange={(e) => setTitleGroup(e.target.value)}
+                />
+                <TextField
+                  value={description}
+                  id='outlined-multiline-static'
+                  label='Multiline'
+                  multiline
+                  rows={4}
+                  variant='outlined'
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </>
+            )}
 
-            <Typography className='' variant='h6' gutterBottom component='div'>
-              {group?.group.titleGroup}
-            </Typography>
-            <p>{group?.group.description}</p>
             <div>
               Сообщество было создано {group?.group.createdAt}
               {/* {formatDate(new Date(group?.group.createdAt))} */}
+              <Button
+                aria-controls='simple-menu'
+                aria-haspopup='true'
+                onClick={handleClick}
+              >
+                <IconButton aria-label='delete' className=''>
+                  <MoreVertIcon />
+                </IconButton>
+              </Button>
+              <Menu
+                id='simple-menu'
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleRemoveGroup}>
+                  <DeleteIcon /> Удалить
+                </MenuItem>
+                {!isEdit ? (
+                  <MenuItem onClick={() => setIsEdit(true)}>
+                    <EditIcon /> Редактировать
+                  </MenuItem>
+                ) : (
+                  <Menu
+                    id='fade-menu'
+                    MenuListProps={{
+                      "aria-labelledby": "fade-button",
+                    }}
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleEditGroup}>
+                      <CheckIcon /> Обновить пост
+                    </MenuItem>
+                    <MenuItem onClick={() => setIsEdit(false)}>
+                      <CloseIcon /> Отмена
+                    </MenuItem>
+                  </Menu>
+                )}
+              </Menu>
             </div>
+
             {signed ? (
               <Button
                 variant='outlined'

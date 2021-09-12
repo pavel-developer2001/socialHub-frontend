@@ -4,6 +4,8 @@ import { GroupMemberApi } from "../../apis/groupMemberApi";
 import {
   addFetchGroupData,
   checkSignFetchData,
+  editFetchGroupData,
+  removeFetchGroupData,
   setFetchGroupData,
   setFetchGroupsData,
   signMemberFetchData,
@@ -60,6 +62,28 @@ function* checkSignMemberWorker({ payload: payload }: any) {
     console.log(error);
   }
 }
+function* removeGroupWorker({ payload: id }: any) {
+  try {
+    const removeOldGroup: Promise<any> = yield call(
+      GroupApi.removeFetchGroup,
+      id
+    );
+    yield put(removeFetchGroupData(removeOldGroup));
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* editGroupWorker({ payload: payload }: any) {
+  try {
+    const editGroup: Promise<any> = yield call(
+      GroupApi.editFetchGroup,
+      payload
+    );
+    yield put(editFetchGroupData(editGroup));
+  } catch (error) {
+    console.log(error);
+  }
+}
 export function* groupWatcher() {
   yield takeEvery(GroupActionTypes.SET_GROUPS, fetchGroupsWorker);
   yield takeEvery(GroupActionTypes.SET_GROUP, fetchGroupWorker);
@@ -67,4 +91,6 @@ export function* groupWatcher() {
   yield takeEvery(GroupActionTypes.SIGN_MEMBER, signMemberWorker);
   yield takeEvery(GroupActionTypes.UNSUBCRIBE_MEMBER, unsubcribeMemberWorker);
   yield takeEvery(GroupActionTypes.CHECK_SIGN, checkSignMemberWorker);
+  yield takeEvery(GroupActionTypes.REMOVE_GROUP, removeGroupWorker);
+  yield takeEvery(GroupActionTypes.EDIT_GROUP, editGroupWorker);
 }

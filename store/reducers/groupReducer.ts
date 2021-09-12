@@ -38,6 +38,14 @@ export const groupReducer = produce(
         draft.signed = action.payload;
         draft.loading = false;
         break;
+      case GroupActionTypes.REMOVE_FETCH_GROUP_DATA:
+        draft.groups.data = draft.groups.data.filter(
+          (item: any) => item.id != action.payload.data.id
+        );
+        break;
+      case GroupActionTypes.EDIT_FETCH_GROUP_DATA:
+        draft.group.data.group = action.payload.data;
+        break;
       default:
         break;
     }
@@ -90,5 +98,21 @@ export const checkSignFetchData = (payload: any) => ({
 });
 export const checkSign = (payload: any) => ({
   type: GroupActionTypes.CHECK_SIGN,
+  payload,
+});
+export const removeFetchGroupData = (payload: any) => ({
+  type: GroupActionTypes.REMOVE_FETCH_GROUP_DATA,
+  payload,
+});
+export const removeGroup = (payload: any) => ({
+  type: GroupActionTypes.REMOVE_GROUP,
+  payload,
+});
+export const editFetchGroupData = (payload: any) => ({
+  type: GroupActionTypes.EDIT_FETCH_GROUP_DATA,
+  payload,
+});
+export const editGroup = (payload: any) => ({
+  type: GroupActionTypes.EDIT_GROUP,
   payload,
 });

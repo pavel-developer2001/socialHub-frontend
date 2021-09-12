@@ -2,6 +2,7 @@ import { put, takeEvery, call } from "redux-saga/effects";
 import { GroupCommentApi } from "../../apis/groupCommentApi";
 import {
   addFetchGroupCommentData,
+  editFetchGroupCommentData,
   removeFetchGroupCommentData,
   setFetchGroupCommentsData,
 } from "../reducers/groupCommentReducer";
@@ -36,6 +37,17 @@ function* removeGroupCommentWorker({ payload: id }: any) {
     console.log(error);
   }
 }
+function* editGroupCommentWorker({ payload: payload }: any) {
+  try {
+    const editGroupComment: Promise<any> = yield call(
+      GroupCommentApi.editFetchGroupComment,
+      payload
+    );
+    yield put(editFetchGroupCommentData(editGroupComment));
+  } catch (error) {
+    console.log(error);
+  }
+}
 export function* groupCommentWatcher() {
   yield takeEvery(
     GroupCommentActionTypes.SET_GROUP_COMMENTS,
@@ -48,5 +60,9 @@ export function* groupCommentWatcher() {
   yield takeEvery(
     GroupCommentActionTypes.REMOVE_GROUP_COMMENT,
     removeGroupCommentWorker
+  );
+  yield takeEvery(
+    GroupCommentActionTypes.EDIT_GROUP_COMMENT,
+    editGroupCommentWorker
   );
 }

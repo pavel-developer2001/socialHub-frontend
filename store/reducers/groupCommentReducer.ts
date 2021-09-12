@@ -26,6 +26,13 @@ export const groupCommentReducer = produce(
         draft.groupComments.data = draft.groupComments.data.filter(
           (item: any) => item.id != action.payload.data.id
         );
+        break;
+      case GroupCommentActionTypes.EDIT_FETCH_GROUP_COMMENT_DATA:
+        draft.groupComments.data = draft.groupComments.data.filter(
+          (item: any) => item.id != action.payload.data.id
+        );
+        draft.groupComments.data.push(action.payload.data);
+        break;
       default:
         break;
     }
@@ -55,5 +62,13 @@ export const removeFetchGroupCommentData = (payload: any) => ({
 });
 export const removeGroupComment = (payload: any) => ({
   type: GroupCommentActionTypes.REMOVE_GROUP_COMMENT,
+  payload,
+});
+export const editFetchGroupCommentData = (payload: any) => ({
+  type: GroupCommentActionTypes.EDIT_FETCH_GROUP_COMMENT_DATA,
+  payload,
+});
+export const editGroupComment = (payload: any) => ({
+  type: GroupCommentActionTypes.EDIT_GROUP_COMMENT,
   payload,
 });
