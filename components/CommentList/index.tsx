@@ -68,8 +68,12 @@ const CommentListItem: React.FC<any> = ({
     <Card sx={{ maxWidth: 345 }} className={styles.commentListItem}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-            R
+          <Avatar
+            sx={{ bgcolor: red[500] }}
+            className={styles.avatar}
+            aria-label='recipe'
+          >
+            U
           </Avatar>
         }
         action={
@@ -82,7 +86,6 @@ const CommentListItem: React.FC<any> = ({
           </IconButton>
         }
         title={name}
-        subheader={formatDate(new Date(date))}
       />
       {myId == userId ? (
         <Menu
@@ -121,42 +124,55 @@ const CommentListItem: React.FC<any> = ({
               </MenuItem>
             </Menu>
           )}
-          {/* <MenuItem onClick={handleClose}>
-            <EditIcon /> Редактировать
-          </MenuItem> */}
         </Menu>
       ) : null}
-      <CardContent>
-        {!isEdit ? (
-          <Typography variant='body2' color='text.secondary'>
-            {text}
+      <CardContent className={styles.content}>
+        <div className={styles.leftContent}>
+          {!isEdit ? (
+            <Typography
+              variant='body2'
+              className={styles.text}
+              color='text.secondary'
+            >
+              {text}
+            </Typography>
+          ) : (
+            <TextField
+              value={commentText}
+              id='outlined-multiline-static'
+              label='Multiline'
+              multiline
+              rows={4}
+              variant='outlined'
+              onChange={(e: any) => setCommentText(e.target.value)}
+            />
+          )}
+          <Typography
+            variant='body2'
+            className={styles.date}
+            color='text.secondary'
+          >
+            {formatDate(new Date(date))} назад
           </Typography>
-        ) : (
-          <TextField
-            value={commentText}
-            id='outlined-multiline-static'
-            label='Multiline'
-            multiline
-            rows={4}
-            variant='outlined'
-            onChange={(e: any) => setCommentText(e.target.value)}
-          />
-        )}
+        </div>
+        <div className={styles.rigthContent}>
+          <IconButton aria-label='add to favorites'>
+            <FavoriteIcon />
+          </IconButton>
+          <Typography
+            variant='body2'
+            className={styles.likes}
+            color='text.secondary'
+          >
+            {likes}
+          </Typography>
+        </div>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
-        </IconButton>
-        <Typography variant='body2' color='text.secondary'>
-          {likes}
-        </Typography>
-      </CardActions>
     </Card>
   );
 };
 
 const CommentList: React.FC<any> = ({ comments, loading }) => {
-  // console.log("COMMENTA", comments);
   return (
     <div className={styles.commentList}>
       {loading ? (
