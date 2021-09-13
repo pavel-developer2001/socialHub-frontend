@@ -2,7 +2,6 @@
   padding: 15px 20px;
   width: fit-content;
   height: fit-content;
-  /* position: fixed; */
 }
 .groupMembersBody {
   height: 290px;
@@ -11,12 +10,31 @@
 }
 .groupMembersItem {
   padding: 10px 5px;
-  border: 1px solid purple;
   border-radius: 16px;
   display: flex;
-  margin: 15px 0px;
   align-items: center;
 }
 .groupMembersItemTitle {
   margin: 0px 10px;
+}
+.count {
+  font-size: 15px;
+  text-align: center;
+}
+.count strong {
+  font-size: 14px;
+}
+.groupMembersItemTitle span {
+  font-size: 13px;
+  background-color: darkslategray;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+}
+.groupMembersItemTitle p {
+  font-size: 14px;
+  color: #2a5885;
+}
+.groupMembersItemTitle p:hover {
+  cursor: pointer;
 }

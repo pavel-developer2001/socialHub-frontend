@@ -1,13 +1,55 @@
-.groupPageHead {
-  padding: 10px 15px;
-  width: fit-content;
+.mainBlock {
+  display: flex;
+}
+.rightBlock {
+  margin-left: 3%;
+  max-width: 230px;
+}
+.infoBlock {
+  padding: 15px 20px;
+  max-width: 545px;
+}
+.title {
+  font-size: 20px;
+  max-width: 485px;
+  margin-bottom: 10px;
+}
+.text {
+  font-size: 14px;
+  max-width: 485px;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 8px 0px;
+}
+.date {
+  font-size: 15px;
+  margin-top: 10px;
+}
+.date span {
+  color: #626d7a;
+  font-size: 14px;
+}
+.avatarBlock {
+  padding: 15px;
+  margin: 0 auto;
   text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 .groupPageHeadAvatar {
-  margin: 0 auto;
+  margin-bottom: 10px;
+  border-radius: 2px;
 }
-.groupPageBody {
-  margin: 35px 0px;
+.settingBlock {
+  margin: 15px 0;
+}
+.settingsGroup {
+  font-size: 14px;
+}
+.membersBlock {
+  align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  max-height: 300px;
 }

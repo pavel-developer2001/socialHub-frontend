@@ -10,24 +10,21 @@ const GroupMembersItem: React.FC<any> = ({ name, userId, status }) => {
   const router = useRouter();
   return (
     <div className={styles.groupMembersItem}>
-      <Avatar sx={{ width: 40, height: 40 }}>OP</Avatar>
-      <Typography
-        variant='body2'
-        gutterBottom
-        component='div'
-        className={styles.groupMembersItemTitle}
-      >
+      <Avatar sx={{ width: 50, height: 50 }}>U</Avatar>
+      <div className={styles.groupMembersItemTitle}>
         <span>{status}</span>
         <p onClick={() => router.push("/users/" + userId)}>{name}</p>
-      </Typography>
+      </div>
     </div>
   );
 };
 
 const GroupMembers: React.FC<any> = ({ members }) => {
   return (
-    <Paper className={styles.groupMembers}>
-      <Typography>Участники: {members?.length}</Typography>
+    <div className={styles.groupMembers}>
+      <Typography className={styles.count}>
+        Участники: <strong>{members?.length}</strong>
+      </Typography>
       <div className={styles.groupMembersBody}>
         {members?.map((member: any) => (
           <GroupMembersItem
@@ -38,7 +35,7 @@ const GroupMembers: React.FC<any> = ({ members }) => {
           />
         ))}
       </div>
-    </Paper>
+    </div>
   );
 };
 

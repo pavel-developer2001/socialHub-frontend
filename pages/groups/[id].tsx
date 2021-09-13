@@ -26,7 +26,7 @@ import { useRouter } from "next/dist/client/router";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { token } from "../../utils/token";
 import jwt_decode from "jwt-decode";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import SettingsIcon from "@material-ui/icons/Settings";
 import { formatDate } from "../../utils/formatDate";
 import { IconButton, TextField } from "@material-ui/core";
 import Menu from "@material-ui/core/Menu";
@@ -107,132 +107,156 @@ const GroupPage = () => {
         <p>loading</p>
       ) : (
         <>
-          {" "}
-          <Paper className={styles.groupPageHead}>
-            {group?.group.pictureGroup ? (
-              group?.group.pictureGroup
-            ) : (
-              <Avatar
-                className={styles.groupPageHeadAvatar}
-                sx={{ width: 76, height: 76, bgcolor: deepPurple[500] }}
-              >
-                OP
-              </Avatar>
-            )}
-            {!isEdit ? (
-              <>
-                <Typography
-                  className=''
-                  variant='h6'
-                  gutterBottom
-                  component='div'
-                >
-                  {group?.group.titleGroup}
-                </Typography>
-                <p>{group?.group.description}</p>
-              </>
-            ) : (
-              <>
-                <TextField
-                  value={titleGroup}
-                  id='outlined-multiline-static'
-                  label='Multiline'
-                  multiline
-                  rows={4}
-                  variant='outlined'
-                  onChange={(e) => setTitleGroup(e.target.value)}
-                />
-                <TextField
-                  value={description}
-                  id='outlined-multiline-static'
-                  label='Multiline'
-                  multiline
-                  rows={4}
-                  variant='outlined'
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </>
-            )}
-
-            <div>
-              Сообщество было создано {group?.group.createdAt}
-              {/* {formatDate(new Date(group?.group.createdAt))} */}
-              <Button
-                aria-controls='simple-menu'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                <IconButton aria-label='delete' className=''>
-                  <MoreVertIcon />
-                </IconButton>
-              </Button>
-              <Menu
-                id='simple-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleRemoveGroup}>
-                  <DeleteIcon /> Удалить
-                </MenuItem>
+          <div className={styles.mainBlock}>
+            <div className={styles.leftBlock}>
+              <Paper className={styles.infoBlock}>
                 {!isEdit ? (
-                  <MenuItem onClick={() => setIsEdit(true)}>
-                    <EditIcon /> Редактировать
-                  </MenuItem>
+                  <>
+                    <Typography
+                      variant='h6'
+                      className={styles.title}
+                      component='h2'
+                    >
+                      {group?.group.titleGroup}
+                    </Typography>
+                    <Typography
+                      variant='h6'
+                      className={styles.text}
+                      component='h2'
+                    >
+                      {group?.group.description}
+                    </Typography>
+                  </>
                 ) : (
+                  <>
+                    <TextField
+                      value={titleGroup}
+                      id='outlined-multiline-static'
+                      label='Multiline'
+                      multiline
+                      rows={4}
+                      variant='outlined'
+                      onChange={(e) => setTitleGroup(e.target.value)}
+                    />
+                    <TextField
+                      value={description}
+                      id='outlined-multiline-static'
+                      label='Multiline'
+                      multiline
+                      rows={4}
+                      variant='outlined'
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </>
+                )}
+                <Typography variant='h6' className={styles.date} component='h2'>
+                  {" "}
+                  Сообщество было создано: <span>{group?.group.createdAt}</span>
+                  {/* {formatDate(new Date(group?.group.createdAt))} */}
+                </Typography>
+              </Paper>
+              <div className={styles.dataBlock}>
+                <AddGroupPost
+                  groupPostAuthor={group?.group.titleGroup}
+                  groupId={group?.group.id}
+                />
+                {loadingPosts ? (
+                  <p>loading</p>
+                ) : groupPosts?.length > 0 ? (
+                  <GroupPostList groupPosts={groupPosts} />
+                ) : (
+                  <p>Пусто</p>
+                )}
+              </div>
+            </div>
+            <div className={styles.rightBlock}>
+              <Paper className={styles.avatarBlock}>
+                {" "}
+                {group?.group.pictureGroup ? (
+                  <Avatar
+                    className={styles.groupPageHeadAvatar}
+                    src={group?.group.pictureGroup}
+                    sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
+                  />
+                ) : (
+                  <Avatar
+                    className={styles.groupPageHeadAvatar}
+                    sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
+                  >
+                    G
+                  </Avatar>
+                )}
+                {signed ? (
+                  <Button
+                    variant='outlined'
+                    onClick={handleUnsubscribe}
+                    startIcon={<RemoveIcon />}
+                  >
+                    Отписаться
+                  </Button>
+                ) : (
+                  <Button
+                    variant='outlined'
+                    onClick={handleSigned}
+                    startIcon={<AddIcon />}
+                  >
+                    Присоединиться
+                  </Button>
+                )}
+              </Paper>
+              <Paper className={styles.settingBlock}>
+                <div>
+                  <Button
+                    aria-controls='simple-menu'
+                    aria-haspopup='true'
+                    onClick={handleClick}
+                  >
+                    <IconButton
+                      aria-label='delete'
+                      className={styles.settingsGroup}
+                    >
+                      <SettingsIcon /> <span>Настройки сообщества</span>
+                    </IconButton>
+                  </Button>
                   <Menu
-                    id='fade-menu'
-                    MenuListProps={{
-                      "aria-labelledby": "fade-button",
-                    }}
+                    id='simple-menu'
                     anchorEl={anchorEl}
+                    keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleEditGroup}>
-                      <CheckIcon /> Обновить пост
+                    <MenuItem onClick={handleRemoveGroup}>
+                      <DeleteIcon /> Удалить
                     </MenuItem>
-                    <MenuItem onClick={() => setIsEdit(false)}>
-                      <CloseIcon /> Отмена
-                    </MenuItem>
+                    {!isEdit ? (
+                      <MenuItem onClick={() => setIsEdit(true)}>
+                        <EditIcon /> Редактировать
+                      </MenuItem>
+                    ) : (
+                      <Menu
+                        id='fade-menu'
+                        MenuListProps={{
+                          "aria-labelledby": "fade-button",
+                        }}
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleEditGroup}>
+                          <CheckIcon /> Обновить пост
+                        </MenuItem>
+                        <MenuItem onClick={() => setIsEdit(false)}>
+                          <CloseIcon /> Отмена
+                        </MenuItem>
+                      </Menu>
+                    )}
                   </Menu>
-                )}
-              </Menu>
+                </div>
+              </Paper>
+              <Paper className={styles.membersBlock}>
+                <GroupMembers members={group?.groupMembers} />
+              </Paper>
             </div>
-
-            {signed ? (
-              <Button
-                variant='outlined'
-                onClick={handleUnsubscribe}
-                startIcon={<RemoveIcon />}
-              >
-                Отписаться
-              </Button>
-            ) : (
-              <Button
-                variant='outlined'
-                onClick={handleSigned}
-                startIcon={<AddIcon />}
-              >
-                Присоединиться
-              </Button>
-            )}
-          </Paper>
-          <AddGroupPost
-            groupPostAuthor={group?.group.titleGroup}
-            groupId={group?.group.id}
-          />
-          <div className={styles.groupPageBody}>
-            {loadingPosts ? (
-              <p>loading</p>
-            ) : groupPosts.length > 0 ? (
-              <GroupPostList groupPosts={groupPosts} />
-            ) : (
-              <p>Пусто</p>
-            )}
-
-            <GroupMembers members={group?.groupMembers} />
           </div>
         </>
       )}
