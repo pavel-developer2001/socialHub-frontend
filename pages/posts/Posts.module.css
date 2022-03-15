@@ -1,6 +1,6 @@
 .postHead {
   display: flex;
-  justify-content: right;
+  justify-content: flex-start;
   align-items: center;
 }
 .postHeadUser {

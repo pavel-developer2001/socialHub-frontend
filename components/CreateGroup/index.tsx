@@ -21,8 +21,9 @@ export interface SimpleDialogProps {
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
+  const [titleGroup, setTitleGroup] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const { onClose, selectedValue, open } = props;
-
   const handleClose = () => {
     onClose(selectedValue);
   };
@@ -30,8 +31,7 @@ function SimpleDialog(props: SimpleDialogProps) {
   const handleListItemClick = (value: string) => {
     onClose(value);
   };
-  const [titleGroup, setTitleGroup] = React.useState("");
-  const [description, setDescription] = React.useState("");
+
   const creator = token ? jwt_decode(token).user : null;
   const userId = token ? jwt_decode(token).id : null;
 
@@ -85,6 +85,7 @@ function SimpleDialog(props: SimpleDialogProps) {
         <ListItem>
           <Button
             variant='contained'
+            disabled={titleGroup === "" || description === ""}
             onClick={handleAddGroup}
             startIcon={<AddIcon />}
           >

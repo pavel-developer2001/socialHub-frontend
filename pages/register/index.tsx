@@ -58,9 +58,13 @@ const Register = () => {
   const handleRegisterUser = async (e: any) => {
     e.preventDefault();
     try {
-      const payload = { name, email, password, password2 };
-      dispatch(registerToken(payload));
-      router.push("/");
+      if (password === password2) {
+        const payload = { name, email, password, password2 };
+        dispatch(registerToken(payload));
+        router.push("/");
+      } else {
+        alert("Пароли не совпадают!!!");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -120,10 +124,8 @@ const Register = () => {
         <Input
           id='standard-adornment-password'
           type={values.showPassword ? "text" : "password"}
-          // value={values.password}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          // onChange={handleChange("password")}
           endAdornment={
             <InputAdornment position='end'>
               <IconButton
@@ -144,8 +146,6 @@ const Register = () => {
         <Input
           id='standard-adornment-password'
           type={values.showPassword ? "text" : "password"}
-          // value={values.password}
-          // onChange={handleChange("password")}
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
           endAdornment={
@@ -164,6 +164,9 @@ const Register = () => {
       <Button
         variant='outlined'
         className={styles.auth__btn}
+        disabled={
+          name === "" || email === "" || password === "" || password2 === ""
+        }
         href='#outlined-buttons'
         onClick={handleRegisterUser}
       >

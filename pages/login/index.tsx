@@ -126,6 +126,7 @@ const Login = () => {
       <Link href='/register'>Зарегистрироваться</Link>
       <Button
         variant='outlined'
+        disabled={email === "" || password === ""}
         href='#outlined-buttons'
         onClick={handleLoginUser}
       >
