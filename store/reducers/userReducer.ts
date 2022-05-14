@@ -19,6 +19,7 @@ export const userReducer = produce(
         draft.token = action.payload;
         break;
       case UserActionTypes.SET_FETCH_USERS_ITEM_DATA:
+        //@ts-ignore
         draft.user = action.payload;
         draft.loading = false;
         break;

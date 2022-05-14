@@ -78,7 +78,7 @@ const Post = () => {
       setAnchorEl(null);
     } catch (error) {}
   };
-  const myId = token ? jwt_decode(token).id : null;
+  const myId = token ? (jwt_decode(token) as any).id : null;
   return (
     <MainLayout>
       <div className={styles.postHead}>
@@ -198,6 +198,7 @@ const Post = () => {
           <div className={styles.footerRating}>
             <IconButton
               aria-label='add to favorites'
+              //@ts-ignore
               className={activeLike ? styles.activeLike : null}
               onClick={activeLike ? handleMunisLike : handlePlusLike}
             >

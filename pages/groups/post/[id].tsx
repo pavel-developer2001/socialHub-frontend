@@ -64,6 +64,7 @@ const GroupPost = () => {
     try {
       if (global.confirm("Вы действительно хотите удалить пост сообщества?")) {
         await dispatch(removeGroupPost(groupPostId));
+        //@ts-ignore
         router.push("/groups/" + groupPost?.groupId);
         setAnchorEl(null);
       }
@@ -71,6 +72,7 @@ const GroupPost = () => {
     } catch (error) {}
   };
   const [groupPostText, setGroupPostText] = React.useState(
+    //@ts-ignore
     groupPost?.groupPostText
   );
   const [isEdit, setIsEdit] = React.useState(false);
@@ -91,24 +93,34 @@ const GroupPost = () => {
           <div className={styles.postHead}>
             <IconButton
               aria-label='back'
-              onClick={() => router.push("/groups/" + groupPost?.groupId)}
+              onClick={
+                //@ts-ignore
+                () => router.push("/groups/" + groupPost?.groupId)
+              }
             >
               <ArrowBackIcon />
             </IconButton>
             <div
               className={styles.postHeadUser}
-              onClick={() => router.push(`/groups/` + groupPost?.groupId)}
+              onClick={
+                //@ts-ignore
+                () => router.push(`/groups/` + groupPost?.groupId)
+              }
             >
-              {groupPost?.groupPostPicture ? (
-                groupPost?.groupPostPicture
-              ) : (
-                <Avatar
-                  className={styles.postAvatar}
-                  sx={{ bgcolor: deepPurple[500] }}
-                >
-                  G
-                </Avatar>
-              )}
+              {
+                //@ts-ignore
+                groupPost?.groupPostPicture ? (
+                  //@ts-ignore
+                  groupPost?.groupPostPicture
+                ) : (
+                  <Avatar
+                    className={styles.postAvatar}
+                    sx={{ bgcolor: deepPurple[500] }}
+                  >
+                    G
+                  </Avatar>
+                )
+              }
               <div className={styles.head}>
                 <Typography
                   variant='h6'
@@ -116,7 +128,10 @@ const GroupPost = () => {
                   gutterBottom
                   component='div'
                 >
-                  {groupPost?.groupPostAuthor}
+                  {
+                    //@ts-ignore
+                    groupPost?.groupPostAuthor
+                  }
                 </Typography>
                 <Typography
                   variant='button'
@@ -125,7 +140,10 @@ const GroupPost = () => {
                   gutterBottom
                 >
                   {/* {formatDate(new Date(groupPost?.createdAt))} */}
-                  {groupPost?.createdAt}
+                  {
+                    //@ts-ignore
+                    groupPost?.createdAt
+                  }
                 </Typography>
               </div>
             </div>
@@ -177,7 +195,10 @@ const GroupPost = () => {
             </Menu>
           </div>
           <div className={styles.postBody}>
-            {groupPost?.groupPostPicture ? groupPost?.groupPostPicture : null}
+            {
+              //@ts-ignore
+              groupPost?.groupPostPicture ? groupPost?.groupPostPicture : null
+            }
 
             {!isEdit ? (
               <Typography
@@ -186,7 +207,10 @@ const GroupPost = () => {
                 gutterBottom
                 component='p'
               >
-                {groupPost?.groupPostText}
+                {
+                  //@ts-ignore
+                  groupPost?.groupPostText
+                }
               </Typography>
             ) : (
               <TextField
@@ -211,7 +235,10 @@ const GroupPost = () => {
                   className={styles.postFooterRatingCount}
                   color='text.secondary'
                 >
-                  {groupPost?.groupPostCountLikes}
+                  {
+                    //@ts-ignore
+                    groupPost?.groupPostCountLikes
+                  }
                 </Typography>
               </div>
               <div className={styles.footerRating}>
@@ -223,7 +250,10 @@ const GroupPost = () => {
                   className={styles.postFooterRatingCount}
                   color='text.secondary'
                 >
-                  {groupComments?.length}
+                  {
+                    //@ts-ignore
+                    groupComments?.length
+                  }
                 </Typography>
               </div>
             </div>
@@ -232,7 +262,10 @@ const GroupPost = () => {
               <>
                 <AddGroupComment
                   groupPostId={groupPostId}
-                  groupId={groupPost?.groupId}
+                  groupId={
+                    //@ts-ignore
+                    groupPost?.groupId
+                  }
                 />
                 {loadingComments ? (
                   <p>Loading</p>

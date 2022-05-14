@@ -48,8 +48,9 @@ const GroupPage = () => {
   React.useEffect(() => {
     dispatch(setGroupPosts(router.query.id));
   }, []);
-
+  //@ts-ignore
   const nameMember = token ? jwt_decode(token).user : null;
+  //@ts-ignore
   const userId = token ? jwt_decode(token).id : null;
   const signed = useSelector<any>((state) => state.group.signed);
   const payload = { groupId: router.query.id, userId };
@@ -59,12 +60,14 @@ const GroupPage = () => {
 
   const handleSigned = async () => {
     try {
+      //@ts-ignore
       const payload = { nameMember, groupId: group?.group.id, userId };
       await dispatch(signMember(payload));
     } catch (error) {}
   };
   const handleUnsubscribe = async () => {
     try {
+      //@ts-ignore
       const payload = { groupId: group?.group.id, userId };
       await dispatch(unsubcribeMember(payload));
     } catch (error) {}
@@ -81,6 +84,7 @@ const GroupPage = () => {
   const handleRemoveGroup = async () => {
     try {
       if (global.confirm("Вы действительно хотите удалить сообщество?")) {
+        //@ts-ignore
         await dispatch(removeGroup(group?.group.id));
         router.push("/");
         setAnchorEl(null);
@@ -88,13 +92,16 @@ const GroupPage = () => {
       setAnchorEl(null);
     } catch (error) {}
   };
+  //@ts-ignore
   const [titleGroup, setTitleGroup] = React.useState(group?.group.titleGroup);
   const [description, setDescription] = React.useState(
+    //@ts-ignore
     group?.group.description
   );
   const [isEdit, setIsEdit] = React.useState(false);
   const handleEditGroup = async () => {
     try {
+      //@ts-ignore
       const payload = { groupId: group?.group.id, titleGroup, description };
       await dispatch(editGroup(payload));
       setIsEdit(false);
@@ -117,14 +124,20 @@ const GroupPage = () => {
                       className={styles.title}
                       component='h2'
                     >
-                      {group?.group.titleGroup}
+                      {
+                        //@ts-ignore
+                        group?.group.titleGroup
+                      }
                     </Typography>
                     <Typography
                       variant='h6'
                       className={styles.text}
                       component='h2'
                     >
-                      {group?.group.description}
+                      {
+                        //@ts-ignore
+                        group?.group.description
+                      }
                     </Typography>
                   </>
                 ) : (
@@ -151,18 +164,31 @@ const GroupPage = () => {
                 )}
                 <Typography variant='h6' className={styles.date} component='h2'>
                   {" "}
-                  Сообщество было создано: <span>{group?.group.createdAt}</span>
+                  Сообщество было создано:{" "}
+                  <span>
+                    {
+                      //@ts-ignore
+                      group?.group.createdAt
+                    }
+                  </span>
                   {/* {formatDate(new Date(group?.group.createdAt))} */}
                 </Typography>
               </Paper>
               <div className={styles.dataBlock}>
                 <AddGroupPost
-                  groupPostAuthor={group?.group.titleGroup}
-                  groupId={group?.group.id}
+                  groupPostAuthor={
+                    //@ts-ignore
+                    group?.group.titleGroup
+                  }
+                  groupId={
+                    //@ts-ignore
+                    group?.group.id
+                  }
                 />
                 {loadingPosts ? (
                   <p>loading</p>
-                ) : groupPosts?.length > 0 ? (
+                ) : //@ts-ignore
+                groupPosts?.length > 0 ? (
                   <GroupPostList groupPosts={groupPosts} />
                 ) : (
                   <p>Пусто</p>
@@ -172,20 +198,26 @@ const GroupPage = () => {
             <div className={styles.rightBlock}>
               <Paper className={styles.avatarBlock}>
                 {" "}
-                {group?.group.pictureGroup ? (
-                  <Avatar
-                    className={styles.groupPageHeadAvatar}
-                    src={group?.group.pictureGroup}
-                    sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
-                  />
-                ) : (
-                  <Avatar
-                    className={styles.groupPageHeadAvatar}
-                    sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
-                  >
-                    G
-                  </Avatar>
-                )}
+                {
+                  //@ts-ignore
+                  group?.group.pictureGroup ? (
+                    <Avatar
+                      className={styles.groupPageHeadAvatar}
+                      src={
+                        //@ts-ignore
+                        group?.group.pictureGroup
+                      }
+                      sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
+                    />
+                  ) : (
+                    <Avatar
+                      className={styles.groupPageHeadAvatar}
+                      sx={{ width: 200, height: 200, bgcolor: deepPurple[500] }}
+                    >
+                      G
+                    </Avatar>
+                  )
+                }
                 {signed ? (
                   <Button
                     variant='outlined'
@@ -254,7 +286,12 @@ const GroupPage = () => {
                 </div>
               </Paper>
               <Paper className={styles.membersBlock}>
-                <GroupMembers members={group?.groupMembers} />
+                <GroupMembers
+                  members={
+                    //@ts-ignore
+                    group?.groupMembers
+                  }
+                />
               </Paper>
             </div>
           </div>

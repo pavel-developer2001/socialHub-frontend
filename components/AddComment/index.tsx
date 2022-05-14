@@ -16,7 +16,9 @@ const AddComment: React.FC<any> = ({ postId }) => {
 
   const handleAddComment = async (e: any) => {
     e.preventDefault();
+    //@ts-ignore
     const author = token ? jwt_decode(token).user : null;
+    //@ts-ignore
     const userId = token ? jwt_decode(token).id : null;
     try {
       const payload = {

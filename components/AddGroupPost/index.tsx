@@ -8,6 +8,7 @@ import { addGroupPost } from "../../store/reducers/groupPostReducer";
 
 const AddGroupPost: React.FC<any> = ({ groupPostAuthor, groupId }) => {
   const [groupPostText, setGroupPostText] = React.useState("");
+  //@ts-ignore
   const userId = token ? jwt_decode(token).id : null;
   const dispatch = useDispatch();
   const handleAddGroupPost = async (e: any) => {

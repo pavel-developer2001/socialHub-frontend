@@ -36,6 +36,7 @@ const CommentListItem: React.FC<any> = ({
   date,
   userId,
 }) => {
+  //@ts-ignore
   const myId = token ? jwt_decode(token).id : null;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

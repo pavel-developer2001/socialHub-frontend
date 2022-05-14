@@ -25,15 +25,18 @@ export const postReducer = produce(
         draft.posts.data.push(action.payload.data);
         break;
       case PostActionTypes.SET_FETCH_POSTS_ITEM_DATA:
+        //@ts-ignore
         draft.post = action.payload;
         draft.loading = false;
         break;
       case PostActionTypes.ADD_COMMENT:
         typeof window !== "undefined" &&
+        //@ts-ignore
           draft.post.data.commentsPost.push(action.payload.data);
         break;
       case PostActionTypes.REMOVE_COMMENT:
         draft.post.data.commentsPost = draft.post.data.commentsPost.filter(
+          //@ts-ignore
           (item) => item.id != action.payload.data.commentId
         );
         break;

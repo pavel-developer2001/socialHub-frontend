@@ -9,7 +9,9 @@ import { addGroupComment } from "../../store/reducers/groupCommentReducer";
 
 const AddGroupComment: React.FC<any> = ({ groupPostId, groupId }) => {
   const [commentText, setCommentText] = React.useState("");
+  //@ts-ignore
   const userId = token ? jwt_decode(token).id : null;
+  //@ts-ignore
   const author = token ? jwt_decode(token).user : null;
   const dispatch = useDispatch();
   const handleAddNewComment = async (e: any) => {

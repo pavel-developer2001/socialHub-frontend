@@ -31,8 +31,9 @@ function SimpleDialog(props: SimpleDialogProps) {
   const handleListItemClick = (value: string) => {
     onClose(value);
   };
-
+//@ts-ignore
   const creator = token ? jwt_decode(token).user : null;
+  //@ts-ignore
   const userId = token ? jwt_decode(token).id : null;
 
   const dispatch = useDispatch();

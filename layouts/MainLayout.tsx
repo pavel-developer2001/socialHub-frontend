@@ -31,7 +31,7 @@ const MainLayout: React.FC<any> = ({ children }) => {
     {
       id: 1,
       name: "Моя страница",
-      link: `/users/${token ? jwt_decode(token).id : null}`,
+      link: `/users/${token ? (jwt_decode(token) as any).id : null}`,
       icon: <AccountCircleIcon />,
     },
     {

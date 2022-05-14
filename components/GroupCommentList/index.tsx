@@ -45,6 +45,7 @@ const GroupCommentListItem: React.FC<any> = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  //@ts-ignore
   const myId = token ? jwt_decode(token).id : null;
   const dispatch = useDispatch();
   const handleRemoveGroupComment = async () => {

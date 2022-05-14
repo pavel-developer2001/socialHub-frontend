@@ -83,7 +83,8 @@ const Navbar = () => {
   const handleOpenProfile = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    router.push(`/users/${token ? jwt_decode(token).id : null}`);
+
+    router.push(`/users/${token ? (jwt_decode(token) as any).id : null}`);
   };
   const dispatch = useDispatch();
   const handleExitUser = () => {

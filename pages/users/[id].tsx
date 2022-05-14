@@ -20,6 +20,7 @@ const Users = () => {
   const { user } = useSelector((state: any) => state.user);
   const { loading } = useSelector((state: any) => state.user);
   const data = user?.data?.user;
+  //@ts-ignore
   const userId = token ? jwt_decode(token).id : null;
   return (
     <MainLayout>
